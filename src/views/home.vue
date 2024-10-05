@@ -14,8 +14,16 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-// Importar la imagen de Marte que se usará para todos los planetas
-import marsTexture from './assets/mars.jpg';
+// Importar las texturas de los planetas
+import mercurioTexture from '@/assets/mercurio.jpg';
+import venusTexture from '@/assets/mars.jpg';
+import tierraTexture from '@/assets/earth.jpg';
+import marsTexture from '@/assets/mars.jpg';
+import jupiterTexture from '@/assets/jupiter.jpg';
+import saturnoTexture from '@/assets/saturno.jpg';
+import uranoTexture from '@/assets/mars.jpg';
+import neptunoTexture from '@/assets/mars.jpg';
+import marteTexture from "@/assets/mars.jpg";
 
 export default {
   setup() {
@@ -25,7 +33,7 @@ export default {
     let orbitGroup;
     let targetPlanet = null; // Para almacenar el planeta objetivo
     let isRotating = true; // Estado de rotación del sistema solar
-    let zoomIn = false; // Para manejar el estado de acercamiento
+    let zoomIn = true; // Para manejar el estado de acercamiento
 
     const initScene = () => {
       // Crear escena y cámara
@@ -90,20 +98,20 @@ export default {
 
     const addPlanets = () => {
       const planetData = [
-        { name: 'Mercurio', radius: 0.3, distance: 10, rotationSpeed: 0.01, description: 'El planeta más cercano al Sol.' },
-        { name: 'Venus', radius: 0.4, distance: 15, rotationSpeed: 0.005, description: 'Conocido como el planeta hermano de la Tierra.' },
-        { name: 'Tierra', radius: 0.5, distance: 20, rotationSpeed: 0.02, description: 'Nuestro hogar.' },
-        { name: 'Marte', radius: 0.4, distance: 25, rotationSpeed: 0.015, description: 'El planeta rojo.' },
-        { name: 'Júpiter', radius: 0.8, distance: 32, rotationSpeed: 0.02, description: 'El planeta más grande del sistema solar.' },
-        { name: 'Saturno', radius: 0.7, distance: 40, rotationSpeed: 0.008, description: 'Famoso por sus anillos.' },
-        { name: 'Urano', radius: 0.6, distance: 50, rotationSpeed: 0.007, description: 'Un gigante de gas.' },
-        { name: 'Neptuno', radius: 0.5, distance: 60, rotationSpeed: 0.006, description: 'El planeta más alejado del Sol.' },
+        { name: 'Mercurio', radius: 0.3, distance: 10, rotationSpeed: 0.01, texture: mercurioTexture, description: 'El planeta más cercano al Sol.' },
+        { name: 'Venus', radius: 0.4, distance: 15, rotationSpeed: 0.005, texture: venusTexture, description: 'Conocido como el planeta hermano de la Tierra.' },
+        { name: 'Tierra', radius: 0.5, distance: 20, rotationSpeed: 0.02, texture: tierraTexture, description: 'Nuestro hogar.' },
+        { name: 'Marte', radius: 0.4, distance: 25, rotationSpeed: 0.015, texture: marteTexture, description: 'El planeta rojo.' },
+        { name: 'Júpiter', radius: 0.8, distance: 32, rotationSpeed: 0.02, texture: jupiterTexture, description: 'El planeta más grande del sistema solar.' },
+        { name: 'Saturno', radius: 0.7, distance: 40, rotationSpeed: 0.008, texture: saturnoTexture, description: 'Famoso por sus anillos.' },
+        { name: 'Urano', radius: 0.6, distance: 50, rotationSpeed: 0.007, texture: uranoTexture, description: 'Un gigante de gas.' },
+        { name: 'Neptuno', radius: 0.5, distance: 60, rotationSpeed: 0.006, texture: neptunoTexture, description: 'El planeta más alejado del Sol.' },
       ];
 
       planetData.forEach(data => {
         const geometry = new THREE.SphereGeometry(data.radius, 32, 32);
         const textureLoader = new THREE.TextureLoader();
-        const material = new THREE.MeshBasicMaterial({ map: textureLoader.load(marsTexture) }); // Usar marsTexture para todos
+        const material = new THREE.MeshBasicMaterial({map: textureLoader.load(data.texture)}); // Usar la textura correspondiente
         const planet = new THREE.Mesh(geometry, material);
 
         // Posicionar el planeta en su órbita
@@ -164,7 +172,7 @@ export default {
         } else {
           // Después de acercarse, habilitar la rotación de la vista 360 grados
           controls.enableZoom = true; // Habilitar zoom para la vista de 360 grados
-          zoomIn = false; // Desactivar zoom en este estado
+          zoomIn = true; // Desactivar zoom en este estado
         }
       }
     };
@@ -176,7 +184,7 @@ export default {
       camera.position.z = 70; // Regresar a la posición inicial
       controls.target.set(0, 0, 0); // Restablecer el objetivo de los controles
       controls.update();
-      controls.enableZoom = false; // Deshabilitar zoom
+      controls.enableZoom = true ; // Deshabilitar zoom
     };
 
     const animate = () => {
