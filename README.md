@@ -21,3 +21,8 @@ npm run build
 ```sh
 npm install dat.gui
 ```
+
+
+```sh
+npm install vue-router
+```
