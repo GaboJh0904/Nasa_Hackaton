@@ -1,18 +1,20 @@
 <template>
-  <div id="home">
-    <div ref="canvasContainer" class="canvas-container"></div>
-    <div v-if="selectedPlanet" class="info-panel">
-      <h2>{{ selectedPlanet.name }}</h2>
-      <p>{{ selectedPlanet.description }}</p>
-      <button @click="resetView">Alejar</button>
+    <div id="home">
+      <div ref="canvasContainer" class="canvas-container"></div>
+      <div v-if="selectedPlanet" class="info-panel">
+        <h2>{{ selectedPlanet.name }}</h2>
+        <p>{{ selectedPlanet.description }}</p>
+        <button @click="navigateToPlanet">Ir a {{ selectedPlanet.name }}</button> <!-- Botón de navegación -->
+        <button @click="resetView">Alejar</button>
+      </div>
     </div>
-  </div>
-</template>
+  </template>
 
 <script>
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router'; // Importar el router
 
 // Importar las texturas de los planetas
 import mercurioTexture from '@/assets/mercurio.jpg';
@@ -29,6 +31,7 @@ export default {
   setup() {
     const canvasContainer = ref(null);
     const selectedPlanet = ref(null);
+    const router = useRouter(); // Obtener el enrutador para manejar la navegación
     let scene, camera, renderer, controls, planets = [];
     let orbitGroup;
     let targetPlanet = null; // Para almacenar el planeta objetivo
@@ -177,6 +180,14 @@ export default {
       }
     };
 
+    // Función para manejar la navegación
+    const navigateToPlanet = () => {
+      if (selectedPlanet.value) {
+        // Navegar a la ruta específica del planeta seleccionado
+        router.push({ path: `/planets/${selectedPlanet.value.name.toLowerCase()}` });
+      }
+    };
+
     const resetView = () => {
       selectedPlanet.value = null; // Cerrar panel de información
       targetPlanet = null; // Restablecer el planeta objetivo
@@ -213,7 +224,7 @@ export default {
       renderer.dispose(); // Limpiar recursos
     });
 
-    return { canvasContainer, selectedPlanet, resetView };
+    return { canvasContainer, selectedPlanet, resetView, navigateToPlanet };
   },
 };
 </script>
