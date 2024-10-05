@@ -15,3 +15,9 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Extensions
+
+```sh
+npm install dat.gui
+```
