@@ -80,7 +80,6 @@ class detectorManos():
             cv2.circle(frame, (x2, y2), r, (0, 0, 255), cv2.FILLED)
             cv2.circle(frame, (cx, cy), r, (0, 0, 255), cv2.FILLED)
         length = math.hypot(x2 - x1, y2 - y1)
-        length *= 1.2
         return length, frame, [x1, y1, x2, y2, cx, cy]
 
 def main():
