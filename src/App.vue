@@ -1,15 +1,23 @@
 <template>
-  <div ref="solarSystemContainer" class="solar-system"></div>
+  <div id="app">
+    <h1>Detección de Manos con Vue.js</h1>
+    <div ref="solarSystemContainer" class="solar-system"></div>
+    <HandDetector />
+  </div>
 </template>
 
 <script>
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import HandDetector from './components/HandDetector.vue';
 
 export default {
   name: 'SolarSystem',
   mounted() {
     this.initSolarSystem();
+  },
+  components: {
+    HandDetector,
   },
   methods: {
     initSolarSystem() {
@@ -98,5 +106,15 @@ export default {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+}
+#app {
+  position: relative;
+}
+h1 {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+  color: white;
 }
 </style>

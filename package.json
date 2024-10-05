@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "opencv.js": "^1.2.1",
     "three": "^0.169.0",
     "vue": "^3.4.29"
   },
