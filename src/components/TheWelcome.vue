@@ -54,7 +54,7 @@ import SupportIcon from './icons/IconSupport.vue'
     <a href="https://github.com/vuejs/devtools" target="_blank" rel="noopener">Vue Dev Tools</a>. If
     you need more resources, we suggest paying
     <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome Vue</a>
-    a visit.
+    a visit.S
   </WelcomeItem>
 
   <WelcomeItem>
