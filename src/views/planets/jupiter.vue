@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="header">
-      <h1>Planeta Tierra</h1>
+      <h1>Planeta Jupiter</h1>
       <button class="toggle-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
@@ -11,55 +11,42 @@
     <div class="main-content">
       <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Tierra</h2>
+          <h2>Información del Planeta Júpiter</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Tierra</p>
-            <p><strong>Radio:</strong> 6,371 km</p>
-            <p><strong>Masa:</strong> 5.972 × 10<sup>24</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> 15 °C</p>
-            <p><strong>Satélites Naturales:</strong> 1 (Luna)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 149.6 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 24 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 365.25 días</p>
+            <p><strong>Nombre:</strong> Júpiter</p>
+            <p><strong>Radio:</strong> 69,911 km</p>
+            <p><strong>Masa:</strong> 1.898 × 10<sup>27</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> -108 °C</p>
+            <p><strong>Satélites Naturales:</strong> 79 (incluyendo Io y Europa)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 778.5 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 9 horas y 56 minutos</p>
+            <p><strong>Tiempo de Traslación:</strong> 11.86 años terrestres</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Nitrógeno: 78%</li>
-              <li>Oxígeno: 21%</li>
-              <li>Argón: 0.93%</li>
-              <li>Otros: 0.07%</li>
+              <li>Hidrógeno: 90%</li>
+              <li>Helio: 10%</li>
+              <li>Metano, amoníaco y vapor de agua: trazas</li>
             </ul>
-            <p><strong>Descripción:</strong> La Tierra es el tercer planeta desde el Sol y el único conocido que alberga
-              vida. Su atmósfera y la presencia de agua en estado líquido son factores clave para la existencia de vida.
-            </p>
-            <p><strong>Origen:</strong> La Tierra se formó hace aproximadamente 4.5 mil millones de años a partir de la
-              acreción de materia en el disco protoplanetario del Sol.</p>
-            <p><strong>Geología:</strong> La Tierra tiene una estructura en capas que incluye el núcleo, el manto y la
-              corteza. Esta composición geológica permite la existencia de diversas características geográficas, como
-              montañas, océanos y llanuras.</p>
-            <p><strong>Ecosistemas:</strong> La Tierra alberga una variedad de ecosistemas, desde selvas tropicales
-              hasta desiertos, cada uno con su propia biodiversidad. La interconexión entre estos ecosistemas es vital
-              para el equilibrio ambiental.</p>
-            <p><strong>Posición en el Sistema Solar:</strong> La Tierra es el tercer planeta más cercano al Sol y
-              pertenece al sistema solar, que incluye ocho planetas y numerosos asteroides y cometas.</p>
+            <p><strong>Descripción:</strong> Júpiter es el planeta más grande del sistema solar y un gigante gaseoso. Su atmósfera está compuesta principalmente de hidrógeno y helio, y presenta bandas de nubes y una famosa tormenta llamada la Gran Mancha Roja.</p>
+            <p><strong>Origen:</strong> Júpiter se formó hace aproximadamente 4.5 mil millones de años y ha mantenido su composición primordial, lo que lo convierte en un objeto de gran interés para los científicos que estudian la formación del sistema solar.</p>
+            <p><strong>Geología:</strong> Como gigante gaseoso, Júpiter no tiene una superficie sólida definida. Se cree que posee un núcleo rocoso rodeado por un manto de hidrógeno metálico, que genera un fuerte campo magnético.</p>
+            <p><strong>Lunas Notables:</strong> Júpiter tiene 79 lunas conocidas, de las cuales Io, Europa, Ganimedes y Calisto son las más grandes. Io es famosa por su actividad volcánica, mientras que Europa es considerada uno de los lugares más prometedores en la búsqueda de vida extraterrestre debido a su océano subsuperficial.</p>
           </div>
 
-          <h3>Satélites Artificiales</h3>
+          <h3>Satélites de Júpiter</h3>
           <ul>
             <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
               Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
             </li>
           </ul>
 
-          <p>La Tierra, además de ser un hogar para millones de especies, también es objeto de estudio continuo.
-            Investigaciones sobre su clima, geología y biología ayudan a entender mejor nuestro planeta y cómo cuidarlo
-            para las futuras generaciones.</p>
-          <p>La conservación del medio ambiente es crucial en la lucha contra el cambio climático, y conocer a fondo
-            nuestro planeta es el primer paso para implementar acciones efectivas.</p>
+          <p>Júpiter, con su inmensa gravedad y campo magnético, juega un papel importante en la dinámica del sistema solar. Su estudio proporciona información valiosa sobre la formación y evolución de los planetas.</p>
+          <p>La exploración de Júpiter y sus lunas es un objetivo primordial para las misiones espaciales, y futuros estudios podrían revelar más sobre su atmósfera y la posibilidad de vida en sus lunas.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de la Tierra ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Júpiter ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -99,7 +86,7 @@
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
+import earthTexture from "@/assets/jupiter.jpg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
@@ -110,12 +97,8 @@ export default {
     return {
       isRotating: true,
       satellites: [
-        {name: 'Hubble', orbitRadius: 547, purpose: 'Observación del espacio', inclination: 28.5},
-        {name: 'Landsat 9', orbitRadius: 705, purpose: 'Monitoreo terrestre', inclination: 98.2},
-        {name: 'ISS', orbitRadius: 408, purpose: 'Investigación científica', inclination: 51.6},
-        {name: 'Sentinel 6', orbitRadius: 1336, purpose: 'Monitoreo del nivel del mar', inclination: 66.0},
-        {name: 'SWOT', orbitRadius: 891, purpose: 'Topografía de aguas', inclination: 77.6},
-        {name: 'IXPE', orbitRadius: 600, purpose: 'Exploración de rayos X', inclination: 0}
+        { name: 'Io', orbitRadius: 4217.00, purpose: 'Satélite natural, geológicamente activo con volcanes', inclination: 0.04 },
+        { name: 'Europa', orbitRadius: 6711.00, purpose: 'Satélite natural, conocido por su superficie de hielo y la posibilidad de un océano subsuperficial', inclination: 0.47 },
       ],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
