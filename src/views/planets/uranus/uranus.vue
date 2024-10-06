@@ -90,9 +90,8 @@
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import earthTexture from "@/assets/urano.jpeg"; // Textura del planeta Tierra
-import image1 from "@/assets/tierra.png";
-import image2 from "@/assets/mars.jpg";
-import image3 from "@/assets/jupiter.jpg";
+import image1 from "@/assets/urano_1.jpg";
+import image2 from "@/assets/urano_2.png";
 import ChatAssistantUranus from "@/views/planets/uranus/ChatAssistantUranus.vue";
 
 export default {
@@ -117,7 +116,6 @@ export default {
       images: [
         image1, // Reemplaza con la URL de la imagen 1
         image2, // Reemplaza con la URL de la imagen 2
-        image3, // Reemplaza con la URL de la imagen 3
         // Añade más imágenes si lo deseas
       ],
       currentImageIndex: 0,
