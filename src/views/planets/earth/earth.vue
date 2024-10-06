@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header class="header-container">
+    <header class="header-planeta">
       <button class="nav-button" @click="goBack">⬅ Atrás</button>
       <h1>Planeta: Tierra</h1>
       <button class="nav-button" @click="toggleRotation">{{
@@ -10,7 +10,7 @@
     </header>
 
     <div class="main-content">
-      <div class="container">
+      <div class="planeta">
         <aside class="sidebar">
           <h2>Información del Planeta Tierra</h2>
           <div class="info-section">
@@ -83,7 +83,7 @@
 
 
           <main class="interaction-area">
-            <div ref="canvasContainer" class="canvas-container"></div>
+            <div ref="canvasplaneta" class="canvas-planeta"></div>
           </main>
         </div>
 
@@ -174,7 +174,7 @@ export default {
 
       const renderer = new THREE.WebGLRenderer({alpha: true});
       renderer.setSize(window.innerWidth, window.innerHeight);
-      this.$refs.canvasContainer.appendChild(renderer.domElement);
+      this.$refs.canvasplaneta.appendChild(renderer.domElement);
 
       // Crear la esfera de la Tierra con su textura
       const earthGeometry = new THREE.SphereGeometry(1, 32, 32); // Radio de la Tierra = 1 unidad
@@ -399,7 +399,7 @@ body {
   background-color: #1a1a1a;
 }
 
-.header-container {
+.header-planeta {
   display: flex;
   align-items: center;
   justify-content: space-between; /* Distribuir elementos a los extremos */
@@ -454,7 +454,7 @@ h1 {
   position: relative;
 }
 
-.canvas-container {
+.canvas-planeta {
   width: 100%;
   height: 600px;
   position: relative;
@@ -489,7 +489,7 @@ h1 {
   color: #ffffff;
 }
 
-.canvas-container {
+.canvas-planeta {
   width: 100%;
   height: 100%;
   position: relative;
@@ -507,7 +507,7 @@ html, body {
   color: #ffffff; /* Texto en color blanco */
 }
 
-.container {
+.planeta {
   display: flex; /* Usar flexbox para disposición */
   height: 100%; /* Altura completa */
 }
@@ -538,7 +538,7 @@ body {
   color: #ffffff; /* Texto en color blanco */
 }
 
-.container {
+.planeta {
   display: flex; /* Usar flexbox para disposición */
   height: 100%; /* Altura completa */
 }

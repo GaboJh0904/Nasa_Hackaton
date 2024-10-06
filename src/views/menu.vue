@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen w-full relative fondo-imagen flex justify-center items-center">
+    <HandDetector/>
     <!-- Título central -->
     <div class="contenedor absolute top-1/4 left-1/2 transform -translate-x-1/2">
       <h1 class="text-white text-4xl font-extrabold text-center">Modulos Educativos</h1>
@@ -31,11 +32,16 @@
 </template>
 
 <script>
+import HandDetector from '@/components/HandDetector.vue';
+
 export default {
   methods: {
     navigateToHome() {
       this.$router.push('/home');
     }
+  },
+  components:{
+    HandDetector
   }
 }
 </script>
@@ -94,13 +100,11 @@ h1 {
 /* Estilo de los botones con tamaño fijo */
 button {
   width: 220px; /* Tamaño fijo de los botones */
-  height: 60px; /* Altura fija */
+  height: auto; /* Altura fija */
   font-size: 1.2rem; /* Ajuste del tamaño de la fuente */
-  color: white;
   background-color: #003366; /* Color de fondo similar al diseño de la imagen */
   border: 2px solid #00ffff; /* Borde brillante */
   border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7); /* Sombra para darle profundidad */
   transition: all 0.3s ease;
   text-transform: uppercase; /* Transformación a mayúsculas */
 }
