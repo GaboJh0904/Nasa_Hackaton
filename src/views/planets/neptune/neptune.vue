@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta Marte</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Neptuno</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -11,44 +12,43 @@
     <div class="main-content">
       <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Marte</h2>
+          <h2>Información del Planeta Neptuno</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Marte</p>
-            <p><strong>Radio:</strong> 3,389.5 km</p>
-            <p><strong>Masa:</strong> 6.4171 × 10<sup>23</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> -63 °C</p>
-            <p><strong>Satélites Naturales:</strong> 2 (Fobos y Deimos)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 227.9 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 24.6 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 687 días terrestres</p>
+            <p><strong>Nombre:</strong> Neptuno</p>
+            <p><strong>Radio:</strong> 24,622 km</p>
+            <p><strong>Masa:</strong> 1.024 × 10<sup>26</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> -214 °C</p>
+            <p><strong>Satélites Naturales:</strong> 14 (incluyendo Tritón y Proteus)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 4.5 mil millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 16 horas</p>
+            <p><strong>Tiempo de Traslación:</strong> 164.8 años</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Carbono Dióxido: 95.3%</li>
-              <li>Nitrógeno: 2.7%</li>
-              <li>Argón: 1.6%</li>
-              <li>Oxígeno: 0.13%</li>
-              <li>Otros: trazas</li>
+              <li>Hidrógeno: 80%</li>
+              <li>Helio: 19%</li>
+              <li>Metano: 1%</li>
             </ul>
-            <p><strong>Descripción:</strong> Marte es conocido como el "Planeta Rojo" debido a su color característico, que proviene de la óxido de hierro en su superficie. Es un planeta rocoso y el cuarto más cercano al Sol.</p>
-            <p><strong>Origen:</strong> Marte se formó hace aproximadamente 4.6 mil millones de años y se ha estudiado intensamente debido a sus similitudes y diferencias con la Tierra.</p>
-            <p><strong>Geología:</strong> Marte tiene características geológicas como volcanes, valles y una gran cantidad de cráteres. El monte Olimpo, el volcán más grande del sistema solar, se encuentra en Marte.</p>
-            <p><strong>Lunas Notables:</strong> Marte tiene dos lunas, Fobos y Deimos, que son pequeñas y se cree que son asteroides capturados. Fobos se encuentra en una órbita muy cercana a Marte, mientras que Deimos está más alejado.</p>
+            <p><strong>Descripción:</strong> Neptuno es el octavo y último planeta del sistema solar. Es conocido por su color azul intenso, que se debe a la presencia de metano en su atmósfera. Neptuno es un gigante gaseoso, con fuertes vientos y grandes tormentas.</p>
+            <p><strong>Origen:</strong> Se formó a partir de la misma nebulosa solar que formó los demás planetas hace aproximadamente 4.5 mil millones de años.</p>
+            <p><strong>Geología:</strong> Aunque Neptuno no tiene una superficie sólida, se cree que su núcleo es rocoso y está rodeado de hielo y gases. Sus características geológicas incluyen grandes tormentas, bandas atmosféricas y un sistema de anillos delgados.</p>
+            <p><strong>Ecosistemas:</strong> Al ser un planeta gaseoso, Neptuno no alberga ecosistemas como los conocemos, pero su estudio es esencial para comprender la formación de planetas y la dinámica atmosférica.</p>
+            <p><strong>Posición en el Sistema Solar:</strong> Neptuno es el cuarto planeta más grande y el más alejado del Sol, perteneciendo al grupo de los gigantes gaseosos.</p>
           </div>
 
-          <h3>Satélites de Marte</h3>
+          <h3>Satélites Naturales</h3>
           <ul>
             <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Propósito: {{ satellite.purpose }}
+              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
             </li>
           </ul>
 
-          <p>La exploración de Marte ha capturado la imaginación de científicos y del público en general. Las misiones a Marte han buscado respuestas sobre la posibilidad de vida y la historia geológica del planeta.</p>
-          <p>Futuras misiones podrían llevar a los humanos a Marte, lo que abriría nuevas fronteras en la exploración espacial.</p>
+          <p>Neptuno, al igual que otros planetas del sistema solar, es objeto de intenso estudio. La investigación sobre su atmósfera, clima y satélites nos ayuda a entender más sobre los planetas gigantes y su formación.</p>
+          <p>La conservación del conocimiento sobre nuestro sistema solar es crucial para futuras exploraciones y para entender la evolución de los planetas.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Marte ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Neptuno ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -83,28 +83,29 @@
       </div>
     </div>
   </div>
+  <ChatAssistantNeptune />
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/mars.jpg"; // Textura del planeta Tierra
+import earthTexture from "@/assets/neptuno.jpg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
+import ChatAssistantNeptune from "@/views/planets/neptune/ChatAssistantNeptune.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistantNeptune,
+  },
   data() {
     return {
       isRotating: true,
       satellites: [
-        { name: 'Mars Express', orbitRadius: 9360, purpose: 'Orbiter, estudia geología y atmósfera', inclination: 86.9 },
-        { name: 'Mars Reconnaissance Orbiter', orbitRadius: 316, purpose: 'Orbiter, busca señales de agua y estudia el clima', inclination: 93.0 },
-        { name: 'MAVEN', orbitRadius: 6200, purpose: 'Estudia la atmósfera superior y el viento solar', inclination: 75.0 },
-        { name: 'Phobos', orbitRadius: 9377, purpose: 'Satélite natural, luna de Marte', inclination: 1.1 },
-        { name: 'Deimos', orbitRadius: 23460, purpose: 'Satélite natural, luna de Marte', inclination: 0.93 },
-        { name: 'Trace Gas Orbiter', orbitRadius: 400, purpose: 'Estudia gases traza en la atmósfera', inclination: 74.0 }
+        { name: 'Tritón', orbitRadius: 35500, purpose: 'Satélite más grande de Neptuno, con actividad geológica.', inclination: 157.8 },
+        { name: 'Proteus', orbitRadius: 11760, purpose: 'Uno de los satélites más grandes y oscuros de Neptuno.', inclination: 50.5 }
       ],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
@@ -123,6 +124,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },
@@ -273,7 +277,7 @@ export default {
         scene.add(orbitLine);
 
         // Crear el satélite
-        const satelliteGeometry = new THREE.SphereGeometry(satelliteSize, 16, 16);
+        const satelliteGeometry = new THREE.SphereGeometry(satelliteSize, 65, 65);
         const satelliteMaterial = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
         const satelliteMesh = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
 

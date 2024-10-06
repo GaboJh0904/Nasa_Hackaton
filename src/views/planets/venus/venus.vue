@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta: Saturno</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Venus</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -11,43 +12,39 @@
     <div class="main-content">
       <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Saturno</h2>
+          <h2>Información del Planeta Venus</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Saturno</p>
-            <p><strong>Radio:</strong> 58,232 km</p>
-            <p><strong>Masa:</strong> 5.683 × 10<sup>26</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> -178 °C</p>
-            <p><strong>Satélites Naturales:</strong> 83 (incluyendo Mimas, Encelado, Tethys, Dione y Rhea)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 1,429 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 10.7 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 29.5 años terrestres</p>
+            <p><strong>Nombre:</strong> Venus</p>
+            <p><strong>Radio:</strong> 6,051.8 km</p>
+            <p><strong>Masa:</strong> 4.867 × 10<sup>24</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> 467 °C</p>
+            <p><strong>Satélites Naturales:</strong> 0</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 108.2 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 243 días terrestres</p>
+            <p><strong>Tiempo de Traslación:</strong> 225 días terrestres</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Hidrógeno: 96.3%</li>
-              <li>Helio: 3.25%</li>
-              <li>Metano, amoníaco, vapor de agua: trazas</li>
+              <li>Ácido carbónico: 96.5%</li>
+              <li>Nitrógeno: 3.5%</li>
+              <li>Otros: trazas de argón, agua, y otros gases</li>
             </ul>
-            <p><strong>Descripción:</strong> Saturno es el sexto planeta desde el Sol y es conocido por sus impresionantes anillos, compuestos de hielo y partículas de roca. Es el segundo planeta más grande del sistema solar después de Júpiter.</p>
-            <p><strong>Origen:</strong> Saturno se formó hace aproximadamente 4.5 mil millones de años y ha sido objeto de fascinación y estudio debido a sus características únicas.</p>
-            <p><strong>Geología:</strong> La geología de Saturno es compleja, ya que no tiene una superficie sólida definida, sino que está compuesta principalmente de hidrógeno y helio. Sin embargo, se cree que tiene un núcleo rocoso.</p>
-            <p><strong>Ecosistemas:</strong> Saturno no tiene ecosistemas conocidos debido a su composición gaseosa y condiciones extremas.</p>
-            <p><strong>Posición en el Sistema Solar:</strong> Saturno es conocido por sus brillantes anillos y es el segundo planeta más grande del sistema solar, siendo visible a simple vista desde la Tierra.</p>
+            <p><strong>Descripción:</strong> Venus es el segundo planeta desde el Sol y es conocido como el "planeta hermano" de la Tierra debido a su tamaño y composición similar. Sin embargo, sus condiciones atmosféricas son extremadamente hostiles.</p>
+            <p><strong>Origen:</strong> Venus se formó hace aproximadamente 4.5 mil millones de años y ha sido objeto de estudio debido a su similitud con la Tierra y sus condiciones climáticas extremas.</p>
+            <p><strong>Geología:</strong> Venus tiene una superficie rocosa con volcanes, llanuras y montañas. Su geología muestra signos de actividad volcánica, aunque no se ha observado erupciones recientes.</p>
+            <p><strong>Ecosistemas:</strong> Venus no tiene ecosistemas como los conocemos, debido a su alta temperatura y presión atmosférica que hacen imposible la existencia de vida tal como la conocemos.</p>
+            <p><strong>Posición en el Sistema Solar:</strong> Venus es el tercer objeto más brillante en el cielo, después del Sol y la Luna, y es conocido como la "estrella de la mañana" o la "estrella de la tarde".</p>
           </div>
 
           <h3>Satélites Naturales</h3>
-          <ul>
-            <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius }} km - Inclinación: {{ satellite.inclination }}°
-            </li>
-          </ul>
+          <p>Venus no tiene satélites naturales.</p>
 
-          <p>Los satélites de Saturno son de gran interés científico. Encelado, por ejemplo, se cree que tiene un océano subsuperficial que podría albergar vida.</p>
-          <p>El estudio de Saturno y sus satélites es crucial para entender la formación de los sistemas planetarios y la evolución del sistema solar.</p>
+          <p>Venus es un planeta intrigante para la ciencia, y su estudio ayuda a comprender más sobre la formación de los planetas y las condiciones que pueden hacer posible la vida.</p>
+          <p>La investigación continua sobre Venus y su atmósfera es crucial para entender los efectos de los gases de efecto invernadero y el cambio climático en nuestro propio planeta.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Saturno ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Venus ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -82,31 +79,27 @@
       </div>
     </div>
   </div>
+  <ChatAssistantVenus />
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/saturno.jpg"; // Textura del planeta Tierra
-import anilloTexture from "@/assets/anillo.jpg"; // Textura del planeta Tierra
+import earthTexture from "@/assets/venus.jpeg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
+import ChatAssistantVenus from "@/views/planets/venus/ChatAssistantVenus.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistantVenus,
+  },
   data() {
     return {
       isRotating: true,
-      satellites: [
-        { name: 'Mimas', orbitRadius: 18500.5, inclination: 1.6, purpose: 'Observación de la superficie' }, // km
-        { name: 'Encelado', orbitRadius: 23800.0, inclination: 0.0, purpose: 'Estudio de géiseres y océanos' }, // km
-        { name: 'Tethys', orbitRadius: 29400.7, inclination: 0.0, purpose: 'Estudio de características geológicas' }, // km
-        { name: 'Dione', orbitRadius: 37700.6, inclination: 0.0, purpose: 'Estudio de la superficie y geología' }, // km
-        { name: 'Rhea', orbitRadius: 52700.6, inclination: 0.0, purpose: 'Estudio de la superficie y anillos' }, // km
-      ]
-
-      ,
+      satellites: [],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
       selectedSatellite: null,
@@ -124,6 +117,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },
@@ -137,40 +133,26 @@ export default {
     createEarth() {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 5;
+      camera.position.z = 3;
 
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      const renderer = new THREE.WebGLRenderer({alpha: true});
       renderer.setSize(window.innerWidth, window.innerHeight);
       this.$refs.canvasContainer.appendChild(renderer.domElement);
 
-      // Crear la esfera de Saturno con su textura
-      const saturnGeometry = new THREE.SphereGeometry(1, 32, 32);
+      // Crear la esfera de la Tierra con su textura
+      const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
       const textureLoader = new THREE.TextureLoader();
-      const saturnMaterial = new THREE.MeshBasicMaterial({
-        map: textureLoader.load(earthTexture),  // Reemplaza con la textura de Saturno
+      const earthMaterial = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(earthTexture),
       });
-      const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
-      scene.add(saturn);
+      const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+      scene.add(earth);
 
       // Crear la textura para las áreas calientes
-      this.createHeatMap(scene, saturn);
+      this.createHeatMap(scene, earth);
 
       // Crear satélites
       this.createSatellites(scene);
-
-      // Crear los anillos de Saturno con opacidad
-      const ringGeometry = new THREE.RingGeometry(1.2, 2, 64);  // Ajusta el radio interior y exterior
-      const ringMaterial = new THREE.MeshBasicMaterial({
-        map: textureLoader.load(anilloTexture),  // Reemplaza con la textura de los anillos
-        side: THREE.DoubleSide,  // Renderizar ambos lados del anillo
-        transparent: true,       // Habilitar transparencia
-        opacity: 0.6             // Ajusta la opacidad (0 completamente transparente, 1 opaco)
-      });
-      const rings = new THREE.Mesh(ringGeometry, ringMaterial);
-      rings.rotation.x = Math.PI / 2;  // Girar los anillos para que estén en posición horizontal
-      scene.add(rings);
-
-
 
       // Controles de cámara
       const controls = new OrbitControls(camera, renderer.domElement);
@@ -182,7 +164,7 @@ export default {
       const animate = () => {
         requestAnimationFrame(animate);
         if (this.isRotating) {
-          saturn.rotation.y += 0.01;
+          earth.rotation.y += 0.01;
           if (this.satelliteObjects.length) {
             this.animateSatellites(); // Animar los satélites solo si están inicializados
             this.updateHeatMapTexture(); // Actualizar textura de las áreas calientes
@@ -263,7 +245,7 @@ export default {
     },
 
     createSatellites(scene) {
-      const satelliteSize = 0.15; // Tamaño de los satélites
+      const satelliteSize = 0.05; // Tamaño de los satélites
 
       this.satellites.forEach((satellite, index) => {
         // Calcular el radio de la órbita

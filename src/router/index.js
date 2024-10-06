@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/home.vue'; // Página del sistema solar (anteriormente App.vue)
-import Earth from '@/views/planets/earth.vue'; // La página del planeta Tierra
+import Earth from '@/views/planets/earth/earth.vue'; // La página del planeta Tierra
 import Menu from '@/views/menu.vue'; // Nuevo menú principal
-import Jupiter from "@/views/planets/jupiter.vue";
-import Mars from "@/views/planets/mars.vue";
-import Mercury from "@/views/planets/mercury.vue";
-import Neptune from "@/views/planets/neptune.vue";
-import Saturn from "@/views/planets/saturn.vue";
-import Uranus from "@/views/planets/uranus.vue";
-import Venus from "@/views/planets/venus.vue";
+import Jupiter from "@/views/planets/jupiter/jupiter.vue";
+import Mars from "@/views/planets/mars/mars.vue";
+import Mercury from "@/views/planets/mercury/mercury.vue";
+import Neptune from "@/views/planets/neptune/neptune.vue";
+import Saturn from "@/views/planets/saturn/saturn.vue";
+import Uranus from "@/views/planets/uranus/uranus.vue";
+import Venus from "@/views/planets/venus/venus.vue";
 
 const routes = [
   { path: '/', component: Menu }, // Página principal con el mapa del sistema solar

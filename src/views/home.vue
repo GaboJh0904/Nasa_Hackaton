@@ -65,14 +65,15 @@ import { useRouter } from "vue-router"; // Importar el router
 
 // Importar las texturas de los planetas
 import mercurioTexture from "@/assets/mercurio.jpg";
-import venusTexture from "@/assets/mars.jpg";
+import venusTexture from "@/assets/venus.jpeg";
 import tierraTexture from "@/assets/earth.jpg";
 import marsTexture from "@/assets/mars.jpg";
 import jupiterTexture from "@/assets/jupiter.jpg";
 import saturnoTexture from "@/assets/saturno.jpg";
-import uranoTexture from "@/assets/mars.jpg";
-import neptunoTexture from "@/assets/mars.jpg";
+import uranoTexture from "@/assets/urano.jpeg";
+import neptunoTexture from "@/assets/neptuno.jpg";
 import marteTexture from "@/assets/mars.jpg";
+import anillos from "@/assets/anillo.jpg";
 import starsImage from "@/assets/stars.jpg";
 
 export default {
@@ -379,7 +380,7 @@ export default {
         if (data.name === "Saturno") {
           const ringGeometry = new THREE.RingGeometry(1.1, 1.8, 32);
           const ringMaterial = new THREE.MeshBasicMaterial({
-            map: textureLoader.load(marsTexture), // Puedes usar otra textura para los anillos
+            map: textureLoader.load(anillos), // Puedes usar otra textura para los anillos
             side: THREE.DoubleSide,
             transparent: true,
             opacity: 0.5,

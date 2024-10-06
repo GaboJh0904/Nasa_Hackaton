@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta: Urano</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Tierra</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -11,43 +12,55 @@
     <div class="main-content">
       <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Urano</h2>
+          <h2>Información del Planeta Tierra</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Urano</p>
-            <p><strong>Radio:</strong> 25,362 km</p>
-            <p><strong>Masa:</strong> 8.681 × 10<sup>25</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> -214 °C</p>
-            <p><strong>Satélites Naturales:</strong> 27</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 2.871 mil millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 17.24 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 84 años terrestres</p>
+            <p><strong>Nombre:</strong> Tierra</p>
+            <p><strong>Radio:</strong> 6,371 km</p>
+            <p><strong>Masa:</strong> 5.972 × 10<sup>24</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> 15 °C</p>
+            <p><strong>Satélites Naturales:</strong> 1 (Luna)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 149.6 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 24 horas</p>
+            <p><strong>Tiempo de Traslación:</strong> 365.25 días</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Hidrógeno: 83%</li>
-              <li>Helio: 15%</li>
-              <li>Metano: 2%</li>
+              <li>Nitrógeno: 78%</li>
+              <li>Oxígeno: 21%</li>
+              <li>Argón: 0.93%</li>
+              <li>Otros: 0.07%</li>
             </ul>
-            <p><strong>Descripción:</strong> Urano es el séptimo planeta desde el Sol y es conocido por su color azul debido al metano en su atmósfera. Es un gigante gaseoso con un eje de rotación extremadamente inclinado.</p>
-            <p><strong>Origen:</strong> Urano se formó hace aproximadamente 4.5 mil millones de años y es el único planeta descubierto por un telescopio.</p>
-            <p><strong>Geología:</strong> Aunque no tiene una superficie sólida, se cree que Urano tiene un núcleo de roca y hielo, rodeado de un manto de agua, amoníaco y metano.</p>
-            <p><strong>Ecosistemas:</strong> Urano no alberga ecosistemas como los conocemos en la Tierra, pero sus lunas pueden tener características geológicas interesantes.</p>
-            <p><strong>Posición en el Sistema Solar:</strong> Urano es el tercer planeta más grande del sistema solar y tiene un sistema de anillos delgado y 27 lunas conocidas.</p>
+            <p><strong>Descripción:</strong> La Tierra es el tercer planeta desde el Sol y el único conocido que alberga
+              vida. Su atmósfera y la presencia de agua en estado líquido son factores clave para la existencia de vida.
+            </p>
+            <p><strong>Origen:</strong> La Tierra se formó hace aproximadamente 4.5 mil millones de años a partir de la
+              acreción de materia en el disco protoplanetario del Sol.</p>
+            <p><strong>Geología:</strong> La Tierra tiene una estructura en capas que incluye el núcleo, el manto y la
+              corteza. Esta composición geológica permite la existencia de diversas características geográficas, como
+              montañas, océanos y llanuras.</p>
+            <p><strong>Ecosistemas:</strong> La Tierra alberga una variedad de ecosistemas, desde selvas tropicales
+              hasta desiertos, cada uno con su propia biodiversidad. La interconexión entre estos ecosistemas es vital
+              para el equilibrio ambiental.</p>
+            <p><strong>Posición en el Sistema Solar:</strong> La Tierra es el tercer planeta más cercano al Sol y
+              pertenece al sistema solar, que incluye ocho planetas y numerosos asteroides y cometas.</p>
           </div>
 
-          <h3>Satélites Naturales</h3>
+          <h3>Satélites Artificiales</h3>
           <ul>
             <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius }} km
+              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
             </li>
           </ul>
 
-          <p>Urano es un planeta fascinante, y aunque no puede albergar vida como la conocemos, sus lunas y atmósfera siguen siendo objeto de estudio por científicos.</p>
-          <p>La comprensión de Urano y su sistema es crucial para entender la formación y evolución de los planetas en nuestro sistema solar.</p>
+          <p>La Tierra, además de ser un hogar para millones de especies, también es objeto de estudio continuo.
+            Investigaciones sobre su clima, geología y biología ayudan a entender mejor nuestro planeta y cómo cuidarlo
+            para las futuras generaciones.</p>
+          <p>La conservación del medio ambiente es crucial en la lucha contra el cambio climático, y conocer a fondo
+            nuestro planeta es el primer paso para implementar acciones efectivas.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Urano ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de la Tierra ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -82,27 +95,33 @@
       </div>
     </div>
   </div>
+  <ChatAssistant />
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/urano.jpeg"; // Textura del planeta Tierra
+import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
+import ChatAssistant from "@/views/planets/earth/ChatAssistant.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistant,
+  },
   data() {
     return {
       isRotating: true,
       satellites: [
-        { name: 'Miranda', orbitRadius: 12900.0, inclination: 4.34, purpose: 'Superficie geológicamente activa con cañones profundos y acantilados.' },
-        { name: 'Ariel', orbitRadius: 19100.0, inclination: 0.16, purpose: 'Superficie rica en hielo y evidencia de actividad geológica.' },
-        { name: 'Umbriel', orbitRadius: 26600.0, inclination: 0.06, purpose: 'Uno de los satélites más oscuros de Urano con cráteres visibles.' },
-        { name: 'Titania', orbitRadius: 43600.0, inclination: 0.23, purpose: 'El satélite más grande, con características geológicas variadas.' },
-        { name: 'Oberon', orbitRadius: 58300.0, inclination: 0.36, purpose: 'El segundo satélite más grande con cráteres profundos.' }
+        {name: 'Hubble', orbitRadius: 547, purpose: 'Observación del espacio', inclination: 28.5},
+        {name: 'Landsat 9', orbitRadius: 705, purpose: 'Monitoreo terrestre', inclination: 98.2},
+        {name: 'ISS', orbitRadius: 408, purpose: 'Investigación científica', inclination: 51.6},
+        {name: 'Sentinel 6', orbitRadius: 1336, purpose: 'Monitoreo del nivel del mar', inclination: 66.0},
+        {name: 'SWOT', orbitRadius: 891, purpose: 'Topografía de aguas', inclination: 77.6},
+        {name: 'IXPE', orbitRadius: 600, purpose: 'Exploración de rayos X', inclination: 0}
       ],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
@@ -121,6 +140,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },
@@ -329,6 +351,31 @@ body {
   text-align: center;
   padding: 20px;
   background-color: #1a1a1a;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribuir elementos a los extremos */
+  padding: 10px;
+  background-color: #232323;
+  color: white;
+}
+
+.back-button, .stop-button {
+  background-color: #dd8b49;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.header-title {
+  text-align: center;
+  flex-grow: 1; /* Para ocupar espacio central */
+  margin: 0;
+  font-size: 1.5em;
 }
 
 h1 {
