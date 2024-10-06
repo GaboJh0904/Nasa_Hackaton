@@ -7,7 +7,7 @@ import os
 
 def iniciar_mouse_virtual():
     # Usar la ruta absoluta del clasificador
-    ruta_clasificador = r'C:\Users\ASUS RYZEN 7\Desktop\CLASES\Nasa_Hackaton\python\rostros\faceCascade.xml'
+    ruta_clasificador = r'python\rostros\faceCascade.xml'
     print(f"Buscando clasificador en: {ruta_clasificador}")
 
     # Verificar si el archivo existe
@@ -24,7 +24,7 @@ def iniciar_mouse_virtual():
         exit()
 
     # Cargar la imagen del astronauta
-    ruta_astronauta = r'C:\Users\ASUS RYZEN 7\Desktop\CLASES\Nasa_Hackaton\python\astronauta.png'
+    ruta_astronauta = r'python\amongUs.png'
     if not os.path.isfile(ruta_astronauta):
         print("Error: La imagen del astronauta no se encontró.")
         exit()
