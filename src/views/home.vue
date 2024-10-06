@@ -1,5 +1,42 @@
 <template>
   <div id="home">
+    <!-- Barra superior -->
+    <div class="top-bar">
+      <!-- Botón de navegación -->
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <!-- Título central -->
+      <h1>Sistema Solar</h1>
+      <!-- Botón para detener/reanudar el movimiento de los planetas -->
+      <button class="pause-button" @click="toggleRotation">
+        {{ isRotating ? 'Detener' : 'Reanudar' }} Movimiento
+      </button>
+    </div>
+    <!-- Cuadro emergente -->
+    <div v-if="showModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>¡Bienvenido al Sistema de Exploración Espacial Avanzada!</h2>
+        <p>
+          Nos complace darte la bienvenida a esta plataforma interactiva,
+          diseñada especialmente para aquellos que buscan profundizar en los
+          misterios del cosmos. Este sistema avanzado no solo te permitirá
+          explorar el sistema solar, sino que también te brindará acceso a
+          información detallada, simulaciones y visualizaciones en 3D para
+          comprender las complejidades de los planetas, asteroides y otros
+          cuerpos celestes.
+        </p>
+        <p>
+          Como estudiante universitario, tendrás la oportunidad de sumergirte en
+          un entorno de aprendizaje inmersivo, donde la precisión científica y
+          la tecnología de última generación convergen para ofrecerte una
+          experiencia educativa única. Aprovecha este recurso para explorar más
+          allá de los conceptos básicos y obtener un conocimiento avanzado que
+          enriquecerá tus estudios y proyectos de investigación.
+        </p>
+        <button @click="closeModal">Comenzar la Exploración</button>
+      </div>
+    </div>
+
+    <!-- Contenido de la página -->
     <div ref="canvasContainer" class="canvas-container"></div>
     <div v-if="selectedPlanet" class="info-panel">
       <h2>{{ selectedPlanet.name }}</h2>
@@ -41,6 +78,10 @@ import starsImage from "@/assets/stars.jpg";
 
 export default {
   setup() {
+    const showModal = ref(true); // Estado para mostrar el modal
+    const closeModal = () => {
+      showModal.value = false; // Ocultar el modal cuando se presione el botón
+    };
     const canvasContainer = ref(null);
     const selectedPlanet = ref(null);
     const router = useRouter(); // Obtener el enrutador para manejar la navegación
@@ -51,9 +92,19 @@ export default {
       planets = [];
     let orbitGroup;
     let targetPlanet = null; // Para almacenar el planeta objetivo
-    let isRotating = true; // Estado de rotación del sistema solar
+    const isRotating = ref(true); // Controla si los planetas están rotando o no
     let zoomIn = true; // Para manejar el estado de acercamiento
     let sun; // Variable para el Sol
+
+    // Función para regresar a la página anterior
+    const goBack = () => {
+      router.back();
+    };
+
+    // Función para alternar la rotación de los planetas
+    const toggleRotation = () => {
+      isRotating.value = !isRotating.value;
+    };
 
     const addComets = () => {
       const textureLoader = new THREE.TextureLoader();
@@ -369,7 +420,7 @@ export default {
       if (intersects.length > 0) {
         selectedPlanet.value = intersects[0].object.userData; // Obtener datos del planeta seleccionado
         targetPlanet = intersects[0].object; // Establecer el planeta objetivo para acercar
-        isRotating = false; // Detener la rotación del sistema solar
+        isRotating.value = false; // Detener la rotación del sistema solar
         zoomIn = true; // Activar la transición de acercamiento
       }
     };
@@ -436,7 +487,7 @@ export default {
           // Cuando termine la animación, simplemente enfocar el Sol sin mostrar info-panel
           selectedPlanet.value = null; // No mostrar info-panel del Sol
           targetPlanet = null; // Eliminar el planeta objetivo
-          isRotating = true; // Reiniciar la rotación del sistema
+          isRotating.value = true; // Reiniciar la rotación del sistema
           controls.update(); // Actualizar controles
         }
       };
@@ -448,7 +499,7 @@ export default {
     const animate = () => {
       requestAnimationFrame(animate);
 
-      if (isRotating) {
+      if (isRotating.value) {
         // Actualizar la rotación de cada planeta individualmente
         planets.forEach((planet) => {
           const data = planet.userData;
@@ -487,9 +538,15 @@ export default {
     };
 
     onMounted(() => {
+      showModal.value = true; // Asegurarse de que el modal esté activo al montar la página
       initScene();
       addPlanets();
       animate();
+
+      const closeModal = () => {
+        console.log("Modal closed"); // Verificar si se está cerrando correctamente
+        showModal.value = false; // Ocultar el modal al cerrar
+      };
     });
 
     onBeforeUnmount(() => {
@@ -497,12 +554,114 @@ export default {
       renderer.dispose(); // Limpiar recursos
     });
 
-    return { canvasContainer, selectedPlanet, resetView, navigateToPlanet };
+    return {
+      showModal,
+      closeModal,
+      isRotating,
+      goBack,
+      toggleRotation,
+      canvasContainer,
+      selectedPlanet,
+      resetView,
+      navigateToPlanet,
+    };
   },
 };
 </script>
 
 <style>
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; /* Asegúrate de que la altura sea suficiente */
+  background-color: rgba(0, 0, 50, 0.8); /* Fondo oscuro */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  z-index: 1001; /* Asegúrate de que esté encima de otros elementos */
+}
+
+.top-bar h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  flex: 1;
+}
+
+.nav-button,
+.pause-button {
+  background-color: #003366; /* Color de fondo */
+  color: white;
+  border: 2px solid #00ffff; /* Borde brillante */
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover,
+.pause-button:hover {
+  background-color: #005580;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 50px; /* Ajustar el cuadro emergente debajo de la barra superior */
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 50px); /* Ajustar la altura para evitar que se desborde */
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Alinear en la parte superior */
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 50, 0.8); /* Fondo oscuro */
+  padding: 15px 20px; /* Reducir padding para ahorrar espacio */
+  border: 2px solid #00ffff; /* Borde brillante estilo neón */
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.7); /* Sombra brillante */
+  width: 80vw; /* Limitar el ancho al 80% del viewport */
+  max-width: 700px; /* Limitar el ancho máximo */
+  max-height: calc(100vh - 100px); /* Limitar la altura total para que siempre se vea */
+  text-align: center;
+  color: white;
+  font-size: 1rem; /* Reducir tamaño de fuente para ajustarse mejor */
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+  font-size: 1.3rem; /* Reducir el tamaño del título */
+}
+
+.modal-content p {
+  margin-bottom: 15px;
+  font-size: 0.9rem; /* Reducir el tamaño del texto */
+}
+
+.modal-content button {
+  background-color: #003366; /* Color de fondo del botón */
+  color: white;
+  border: 2px solid #00ffff; /* Borde brillante */
+  padding: 8px 16px; /* Reducir tamaño del botón */
+  border-radius: 8px;
+  font-size: 1rem; /* Reducir tamaño del texto en el botón */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #005580; /* Cambia el fondo al pasar el cursor */
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 255, 255, 0.8); /* Sombra más intensa en hover */
+}
+
 .canvas-container {
   width: 100vw;
   height: 100vh;

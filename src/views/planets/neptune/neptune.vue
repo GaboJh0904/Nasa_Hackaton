@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
       <h1>Planeta: Neptuno</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -82,6 +83,7 @@
       </div>
     </div>
   </div>
+  <ChatAssistantNeptune />
 </template>
 
 <script>
@@ -91,9 +93,13 @@ import earthTexture from "@/assets/neptuno.jpg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
+import ChatAssistantNeptune from "@/views/planets/neptune/ChatAssistantNeptune.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistantNeptune,
+  },
   data() {
     return {
       isRotating: true,
@@ -118,6 +124,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },

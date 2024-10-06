@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/home.vue'; // Página del sistema solar (anteriormente App.vue)
 import Earth from '@/views/planets/earth/earth.vue'; // La página del planeta Tierra
-import Jupiter from "@/views/planets/jupiter.vue";
-import Mars from "@/views/planets/mars.vue";
-import Mercury from "@/views/planets/mercury.vue";
-import Neptune from "@/views/planets/neptune.vue";
-import Saturn from "@/views/planets/saturn.vue";
-import Uranus from "@/views/planets/uranus.vue";
-import Venus from "@/views/planets/venus.vue";
+import Menu from '@/views/menu.vue'; // Nuevo menú principal
+import Jupiter from "@/views/planets/jupiter/jupiter.vue";
+import Mars from "@/views/planets/mars/mars.vue";
+import Mercury from "@/views/planets/mercury/mercury.vue";
+import Neptune from "@/views/planets/neptune/neptune.vue";
+import Saturn from "@/views/planets/saturn/saturn.vue";
+import Uranus from "@/views/planets/uranus/uranus.vue";
+import Venus from "@/views/planets/venus/venus.vue";
 
 const routes = [
-  { path: '/', component: Home }, // Página principal con el mapa del sistema solar
+  { path: '/', component: Menu }, // Página principal con el mapa del sistema solar
   { path: '/planets/Tierra', component: Earth }, // Ruta para la página de la Tierra
+  { path: '/home', component: Home }, // Página del Home (anteriormente principal)
   { path: '/planets/Júpiter', component: Jupiter }, // Ruta para la página de la Tierra
   { path: '/planets/Marte', component: Mars }, // Ruta para la página de la Tierra
   { path: '/planets/Mercurio', component: Mercury }, // Ruta para la página de la Tierra

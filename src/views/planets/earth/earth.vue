@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta Tierra</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Tierra</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -139,6 +140,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },
@@ -347,6 +351,31 @@ body {
   text-align: center;
   padding: 20px;
   background-color: #1a1a1a;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribuir elementos a los extremos */
+  padding: 10px;
+  background-color: #232323;
+  color: white;
+}
+
+.back-button, .stop-button {
+  background-color: #dd8b49;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.header-title {
+  text-align: center;
+  flex-grow: 1; /* Para ocupar espacio central */
+  margin: 0;
+  font-size: 1.5em;
 }
 
 h1 {

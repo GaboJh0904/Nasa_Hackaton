@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta Marte</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Mercurio</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -11,44 +12,44 @@
     <div class="main-content">
       <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Marte</h2>
+          <h2>Información del Planeta Mercurio</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Marte</p>
-            <p><strong>Radio:</strong> 3,389.5 km</p>
-            <p><strong>Masa:</strong> 6.4171 × 10<sup>23</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> -63 °C</p>
-            <p><strong>Satélites Naturales:</strong> 2 (Fobos y Deimos)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 227.9 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 24.6 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 687 días terrestres</p>
-            <p><strong>Composición de la Atmósfera:</strong></p>
-            <ul>
-              <li>Carbono Dióxido: 95.3%</li>
-              <li>Nitrógeno: 2.7%</li>
-              <li>Argón: 1.6%</li>
-              <li>Oxígeno: 0.13%</li>
-              <li>Otros: trazas</li>
-            </ul>
-            <p><strong>Descripción:</strong> Marte es conocido como el "Planeta Rojo" debido a su color característico, que proviene de la óxido de hierro en su superficie. Es un planeta rocoso y el cuarto más cercano al Sol.</p>
-            <p><strong>Origen:</strong> Marte se formó hace aproximadamente 4.6 mil millones de años y se ha estudiado intensamente debido a sus similitudes y diferencias con la Tierra.</p>
-            <p><strong>Geología:</strong> Marte tiene características geológicas como volcanes, valles y una gran cantidad de cráteres. El monte Olimpo, el volcán más grande del sistema solar, se encuentra en Marte.</p>
-            <p><strong>Lunas Notables:</strong> Marte tiene dos lunas, Fobos y Deimos, que son pequeñas y se cree que son asteroides capturados. Fobos se encuentra en una órbita muy cercana a Marte, mientras que Deimos está más alejado.</p>
+            <p><strong>Nombre:</strong> Mercurio</p>
+            <p><strong>Radio:</strong> 2,439.7 km</p>
+            <p><strong>Masa:</strong> 3.301 × 10<sup>23</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> 167 °C</p>
+            <p><strong>Satélites Naturales:</strong> 0 (Mercurio no tiene lunas)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 57.91 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 58.6 días terrestres</p>
+            <p><strong>Tiempo de Traslación:</strong> 88 días terrestres</p>
+            <p><strong>Composición de la Atmósfera:</strong> Muy delgada, compuesta principalmente de oxígeno, sodio,
+              hidrógeno, helio y potasio.</p>
+            <p><strong>Descripción:</strong> Mercurio es el planeta más cercano al Sol y el más pequeño del sistema
+              solar. Su superficie está llena de cráteres, similar a la de la Luna, debido a su falta de atmósfera
+              significativa que podría erosionar o cambiar su superficie.</p>
+            <p><strong>Geología:</strong> Mercurio presenta una estructura interna similar a la de la Tierra, con un
+              núcleo metálico grande que representa aproximadamente el 75% de su radio. Tiene un paisaje variado que
+              incluye llanuras, montañas y cuencas de impacto.</p>
+            <p><strong>Exploración:</strong> Mercurio ha sido estudiado principalmente por la misión Mariner 10 en la
+              década de 1970 y más recientemente por la sonda MESSENGER, que proporcionó datos detallados sobre su
+              superficie, composición y campo magnético.</p>
           </div>
 
-          <h3>Satélites de Marte</h3>
+          <h3>Satélites de Mercurio</h3>
           <ul>
-            <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Propósito: {{ satellite.purpose }}
-            </li>
+            <li>No tiene satélites naturales.</li>
           </ul>
 
-          <p>La exploración de Marte ha capturado la imaginación de científicos y del público en general. Las misiones a Marte han buscado respuestas sobre la posibilidad de vida y la historia geológica del planeta.</p>
-          <p>Futuras misiones podrían llevar a los humanos a Marte, lo que abriría nuevas fronteras en la exploración espacial.</p>
+          <p>Mercurio, al ser un planeta rocoso y pequeño, no tiene lunas ni anillos. Su proximidad al Sol y su
+            temperatura extrema lo hacen un lugar poco hospitalario.</p>
+          <p>La exploración de Mercurio es un área de interés continuo, y futuras misiones podrían ayudar a descubrir
+            más sobre su formación y evolución en comparación con otros planetas terrestres.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Marte ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image"
+                   :alt="'Imagen de Mercurio ' + (index + 1)"/>
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -83,29 +84,27 @@
       </div>
     </div>
   </div>
+  <ChatAssistantMercury/>
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/mars.jpg"; // Textura del planeta Tierra
+import earthTexture from "@/assets/mercurio.jpg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
+import ChatAssistantMercury from "@/views/planets/mercury/ChatAssistantMercury.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistantMercury,
+  },
   data() {
     return {
       isRotating: true,
-      satellites: [
-        { name: 'Mars Express', orbitRadius: 9360, purpose: 'Orbiter, estudia geología y atmósfera', inclination: 86.9 },
-        { name: 'Mars Reconnaissance Orbiter', orbitRadius: 316, purpose: 'Orbiter, busca señales de agua y estudia el clima', inclination: 93.0 },
-        { name: 'MAVEN', orbitRadius: 6200, purpose: 'Estudia la atmósfera superior y el viento solar', inclination: 75.0 },
-        { name: 'Phobos', orbitRadius: 9377, purpose: 'Satélite natural, luna de Marte', inclination: 1.1 },
-        { name: 'Deimos', orbitRadius: 23460, purpose: 'Satélite natural, luna de Marte', inclination: 0.93 },
-        { name: 'Trace Gas Orbiter', orbitRadius: 400, purpose: 'Estudia gases traza en la atmósfera', inclination: 74.0 }
-      ],
+      satellites: [],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
       selectedSatellite: null,
@@ -438,6 +437,7 @@ html, body {
   background-color: #121212; /* Fondo oscuro para el contenido */
   color: #ffffff; /* Texto en color blanco */
 }
+
 html,
 body {
   height: 100%; /* Asegurar que el body ocupe toda la altura de la ventana */
