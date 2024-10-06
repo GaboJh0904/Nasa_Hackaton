@@ -4,8 +4,17 @@
     <div v-if="selectedPlanet" class="info-panel">
       <h2>{{ selectedPlanet.name }}</h2>
       <p>{{ selectedPlanet.description }}</p>
-      <button @click="navigateToPlanet">Ir a {{ selectedPlanet.name }}</button>
-      <!-- Botón de navegación -->
+      <!-- Mostrar el botón solo si no es un cometa o asteroide -->
+      <button
+        v-if="
+          selectedPlanet.name !== 'Cometa' &&
+          selectedPlanet.name !== 'Asteroide'
+        "
+        @click="navigateToPlanet"
+      >
+        Ir a {{ selectedPlanet.name }}
+      </button>
+      <!-- Botón de alejamiento -->
       <button @click="resetView">Alejar</button>
     </div>
   </div>
@@ -43,29 +52,63 @@ export default {
     let targetPlanet = null; // Para almacenar el planeta objetivo
     let isRotating = true; // Estado de rotación del sistema solar
     let zoomIn = true; // Para manejar el estado de acercamiento
+    let sun; // Variable para el Sol
 
-    /*const addCometsAndAsteroids = () => {
-    const textureLoader = new THREE.TextureLoader();
-    const material = new THREE.MeshBasicMaterial({ map: textureLoader.load(marsTexture) }); // Textura de Marte temporal
+    const addComets = () => {
+      const textureLoader = new THREE.TextureLoader();
+      const material = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(marsTexture), // Textura de Marte temporal
+      });
 
-    // Generar 50 cuerpos (cometas, asteroides, meteoritos)
-    for (let i = 0; i < 50; i++) {
-        const radius = Math.random() * 0.2 + 0.05; // Tamaño aleatorio entre 0.05 y 0.25
-        const geometry = new THREE.SphereGeometry(radius, 16, 16); // Pequeñas esferas
+      // Generar 10 cometas con tamaños más grandes
+      for (let i = 0; i < 10; i++) {
+        const radius = Math.random() * 1 + 0.5; // Tamaño aleatorio entre 0.5 y 1.5 (cometas más grandes)
+        const geometry = new THREE.SphereGeometry(radius, 16, 16); // Esferas más grandes para cometas
 
         const comet = new THREE.Mesh(geometry, material);
+        comet.userData = {
+          name: "Cometa",
+          description: "Un cometa viajando a través del sistema solar.",
+        };
 
-        // Posición aleatoria en un rango en 3D alrededor del sistema solar
-        const posX = (Math.random() - 0.5) * 200; // Rango de -100 a 100
+        // Posición más cercana para hacer visibles los cometas
+        const posX = (Math.random() - 0.5) * 100; // Rango de -50 a 50
         const posY = (Math.random() - 0.5) * 100; // Rango de -50 a 50
-        const posZ = (Math.random() - 0.5) * 200; // Rango de -100 a 100
+        const posZ = (Math.random() - 0.5) * 100; // Rango de -50 a 50
 
         comet.position.set(posX, posY, posZ);
-
-        // Añadir el objeto a la escena
         scene.add(comet);
-    }
-    };*/
+        planets.push(comet); // Añadirlo a la lista de planetas para interactuar con raycaster
+      }
+    };
+
+    const addAsteroids = () => {
+      const textureLoader = new THREE.TextureLoader();
+      const material = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(marsTexture), // Textura de Marte temporal
+      });
+
+      // Generar 15 asteroides con tamaños más grandes
+      for (let i = 0; i < 15; i++) {
+        const radius = Math.random() * 1.5 + 0.5; // Tamaño aleatorio entre 0.5 y 2 (asteroides más grandes)
+        const geometry = new THREE.SphereGeometry(radius, 16, 16); // Esferas más grandes para asteroides
+
+        const asteroid = new THREE.Mesh(geometry, material);
+        asteroid.userData = {
+          name: "Asteroide",
+          description: "Un asteroide moviéndose en el sistema solar.",
+        };
+
+        // Posición más cercana para hacer visibles los asteroides
+        const posX = (Math.random() - 0.5) * 150; // Rango de -75 a 75
+        const posY = (Math.random() - 0.5) * 150; // Rango de -75 a 75
+        const posZ = (Math.random() - 0.5) * 150; // Rango de -75 a 75
+
+        asteroid.position.set(posX, posY, posZ);
+        scene.add(asteroid);
+        planets.push(asteroid); // Añadirlo a la lista de planetas para interactuar con raycaster
+      }
+    };
 
     const addStars = () => {
       const textureLoader = new THREE.TextureLoader();
@@ -128,8 +171,12 @@ export default {
       // Crear el Sol
       const sunGeometry = new THREE.SphereGeometry(3, 32, 32);
       const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffdd00 });
-      const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-      scene.add(sun);
+      sun = new THREE.Mesh(sunGeometry, sunMaterial);
+      sun.userData = {
+        name: "Sol",
+        description:
+          "El Sol es la estrella en el centro del Sistema Solar. Genera energía a través de la fusión nuclear y es el principal proveedor de luz y calor para la vida en la Tierra.",
+      };
 
       // Añadir luz del Sol
       const sunLight = new THREE.PointLight(0xffdd00, 2, 100);
@@ -148,13 +195,16 @@ export default {
 
       // Añadir un grupo para la órbita de los planetas
       orbitGroup = new THREE.Group();
+      orbitGroup.add(sun); // Añadir el Sol al grupo de órbita
+      planets.push(sun); // Añadir el Sol a la lista de planetas
       scene.add(orbitGroup);
 
       window.addEventListener("resize", onWindowResize);
       renderer.domElement.addEventListener("click", onCanvasClick);
 
-      // Añadir cometas y asteroides
-      //addCometsAndAsteroids();
+      // Llamada a las funciones para añadir cometas y asteroides
+      //addComets();
+      //addAsteroids();
 
       // Añadir estrellas
       addStars();
@@ -359,18 +409,22 @@ export default {
     };
 
     const resetView = () => {
-      const originalPosition = new THREE.Vector3(0, 0, 70); // Posición inicial de la cámara
-      const sunPosition = new THREE.Vector3(0, 0, 0); // Posición del Sol (centro de la escena)
+      const sunPosition = new THREE.Vector3(0, 0, 0); // Posición del Sol
+      const originalCameraPosition = new THREE.Vector3(0, 0, 70); // Posición inicial de la cámara
 
       let t = 0; // Tiempo de interpolación (0 a 1)
 
-      // Crear una función de animación para alejarse del planeta
+      // Asegurar que el Sol sea el objetivo
+      targetPlanet = sun; // Asignar el Sol como targetPlanet
+      controls.target.copy(sunPosition); // Enfocar la cámara hacia el Sol
+
+      // Crear una función de animación para alejarse del planeta y enfocar el Sol
       const zoomOutAnimation = () => {
         if (t < 1) {
           t += 0.02; // Velocidad de la animación
 
-          // Interpolar la posición de la cámara hacia la posición original
-          camera.position.lerp(originalPosition, t);
+          // Interpolar la posición de la cámara hacia la posición original (alejamiento)
+          camera.position.lerp(originalCameraPosition, t);
 
           // Asegurar que la cámara enfoque el Sol durante la animación
           controls.target.copy(sunPosition);
@@ -378,11 +432,11 @@ export default {
           // Seguir llamando a la función hasta que el t alcance 1
           requestAnimationFrame(zoomOutAnimation);
         } else {
-          // Una vez que la animación termine, asegurarse de que todo esté reseteado
-          selectedPlanet.value = null; // Cerrar panel de información
-          targetPlanet = null; // Restablecer el planeta objetivo
-          isRotating = true; // Reiniciar la rotación de los planetas
-          controls.update();
+          // Cuando termine la animación, simplemente enfocar el Sol sin mostrar info-panel
+          selectedPlanet.value = null; // No mostrar info-panel del Sol
+          targetPlanet = null; // Eliminar el planeta objetivo
+          isRotating = true; // Reiniciar la rotación del sistema
+          controls.update(); // Actualizar controles
         }
       };
 
