@@ -1,6 +1,5 @@
 <template>
   <div class="text-center mt-5">
-    <h1>Detección de Manos con Vue y Handtrack.js</h1>
     <button @click="startMouse" class="btn btn-primary m-2">Iniciar Mouse Virtual</button>
     <button @click="stopMouse" class="btn btn-danger m-2">Cancelar Mouse Virtual</button>
   </div>

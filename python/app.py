@@ -14,9 +14,6 @@ def start_mouse():
         # Iniciar el proceso
         process = subprocess.Popen(["python", "MouseVirtual.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         
-        # Esperar un momento para verificar si el proceso se ha iniciado
-        time.sleep(2)  # Espera 2 segundos (ajusta según sea necesario)
-
         # Verificar si el proceso está activo
         if process.poll() is None:  # El proceso se está ejecutando
             return jsonify({"status": "Mouse virtual iniciado"})
@@ -30,9 +27,13 @@ def start_mouse():
 def stop_mouse():
     global process  # Acceder a la variable global
     if process:
-        process.terminate()  # Terminar el proceso
-        process = None  # Reiniciar la variable
-        return jsonify({"status": "Mouse virtual detenido"})
+        try:
+            process.terminate()  # Terminar el proceso
+            process.wait()  # Esperar a que el proceso se cierre
+            process = None  # Reiniciar la variable
+            return jsonify({"status": "Mouse virtual detenido"})
+        except Exception as e:
+            return jsonify({"status": "Error al detener el mouse virtual", "error": str(e)})
     else:
         return jsonify({"status": "No hay mouse virtual en ejecución"})
 
