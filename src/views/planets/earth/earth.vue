@@ -103,8 +103,8 @@ import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
-import image2 from "@/assets/mars.jpg";
-import image3 from "@/assets/jupiter.jpg";
+import image2 from "@/assets/tierra_2.jpg";
+import image3 from "@/assets/tierra_3.jpg";
 import ChatAssistant from "@/views/planets/earth/ChatAssistant.vue";
 
 export default {
