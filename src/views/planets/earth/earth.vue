@@ -102,6 +102,7 @@
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
+import moonTexture from "@/assets/moon.jpeg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
@@ -163,13 +164,25 @@ export default {
       this.$refs.canvasContainer.appendChild(renderer.domElement);
 
       // Crear la esfera de la Tierra con su textura
-      const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
+      const earthGeometry = new THREE.SphereGeometry(1, 32, 32); // Radio de la Tierra = 1 unidad
       const textureLoader = new THREE.TextureLoader();
       const earthMaterial = new THREE.MeshBasicMaterial({
         map: textureLoader.load(earthTexture),
       });
       const earth = new THREE.Mesh(earthGeometry, earthMaterial);
       scene.add(earth);
+
+      // Crear la esfera de la Luna con su textura (ajustada para ser más grande)
+      const moonGeometry = new THREE.SphereGeometry(0.2, 15, 15); // Radio de la Luna ajustado a 0.5 unidades
+      const moonMaterial = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(moonTexture), // Textura de la Luna
+      });
+      const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+
+      // Ajustar la distancia de la Luna a la Tierra
+      const moonOrbitRadius = 3; // Distancia más cercana para una visualización mejor (antes 60)
+      moon.position.set(moonOrbitRadius, 0, 0); // Posicionar la Luna a la nueva distancia
+      scene.add(moon);
 
       // Crear la textura para las áreas calientes
       this.createHeatMap(scene, earth);
@@ -183,19 +196,37 @@ export default {
       controls.dampingFactor = 0.25;
       controls.enableZoom = true;
 
+      // Variables para animar la órbita y rotación de la Luna
+      let moonAngle = 0;
+      const moonOrbitSpeed = 0.01; // Velocidad de la órbita de la Luna
+      const moonRotationSpeed = moonOrbitSpeed; // Igual velocidad de rotación sincrónica con la órbita
+
       // Animación principal
       const animate = () => {
         requestAnimationFrame(animate);
+
         if (this.isRotating) {
+          // Rotación de la Tierra
           earth.rotation.y += 0.01;
+
+          // Animar la órbita de la Luna (manteniendo rotación sincrónica)
+          moonAngle += moonOrbitSpeed;
+          moon.position.x = Math.cos(moonAngle) * moonOrbitRadius;
+          moon.position.z = Math.sin(moonAngle) * moonOrbitRadius;
+
+          // Rotación sincrónica de la Luna
+          moon.rotation.y += moonRotationSpeed;
+
           if (this.satelliteObjects.length) {
             this.animateSatellites(); // Animar los satélites solo si están inicializados
             this.updateHeatMapTexture(); // Actualizar textura de las áreas calientes
           }
         }
+
         controls.update();
         renderer.render(scene, camera);
       };
+
       animate();
 
       window.addEventListener("resize", () => {
@@ -204,6 +235,8 @@ export default {
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
     },
+
+
 
     createHeatMap(scene, earth) {
       // Crear un canvas para representar las áreas de calor
