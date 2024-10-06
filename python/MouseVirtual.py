@@ -31,7 +31,7 @@ def iniciar_mouse_virtual():
         exit()
 
     # Configuración de la cámara - ajustar según la resolución de la pantalla
-    anchocam, altocam = 640, 480
+    anchocam, altocam = 540, 380
     cuadro = 100
     anchopanta, altopanta = anchocam, altocam  
     sua = 5
@@ -53,6 +53,7 @@ def iniciar_mouse_virtual():
 
     while True:
         ret, frame = cap.read()
+        frame = cv2.flip(frame, 1)
 
         # Verificar si se detecta la cara
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -95,7 +96,7 @@ def iniciar_mouse_virtual():
                 cubix = pubix + (x_mouse - pubix) / sua
                 cubiy = pubiy + (y_mouse - pubiy) / sua
 
-                pyautogui.moveTo(anchopanta - cubix, cubiy)
+                # pyautogui.moveTo(anchopanta - cubix, cubiy)
                 cv2.circle(frame, (x1, y1), 10, (0, 0, 0), cv2.FILLED)
                 pubix, pubiy = cubix, cubiy
 
@@ -109,12 +110,12 @@ def iniciar_mouse_virtual():
                 else:
                     zoom_factor = longitud / distancia_inicial  # Factor de zoom basado en la distancia
                     if zoom_factor > 1.2:  # Alejando los dedos (Zoom in)
-                        pyautogui.hotkey('ctrl', '+')
+                        # pyautogui.hotkey('ctrl', '+')
                         print("Zoom in")
                         distancia_inicial = longitud  # Actualizar la distancia inicial
 
                     elif zoom_factor < 0.8:  # Acercando los dedos (Zoom out)
-                        pyautogui.hotkey('ctrl', '-')
+                        # pyautogui.hotkey('ctrl', '-')
                         print("Zoom out")
                         distancia_inicial = longitud  # Actualizar la distancia inicial
 
