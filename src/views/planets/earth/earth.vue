@@ -65,6 +65,8 @@
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
           </div>
+
+          <button class="nav-button" @click="openDashboard">Ver Dashboard</button>
           <br>
           <br>
           <br>
@@ -75,6 +77,8 @@
           <br>
           <br>
         </aside>
+        <!-- Modal de Dashboard -->
+        <ModalEarth v-if="isDashboardOpen" :isVisible="isDashboardOpen" @close="closeDashboard" />
         <div class="content">
 
 
@@ -107,11 +111,13 @@ import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/tierra_2.jpg";
 import image3 from "@/assets/tierra_3.jpg";
 import ChatAssistant from "@/views/planets/earth/ChatAssistant.vue";
+import ModalEarth from "@/views/planets/earth/ModalEarth.vue";
 
 export default {
   name: "App",
   components: {
     ChatAssistant,
+    ModalEarth
   },
   data() {
     return {
@@ -135,12 +141,19 @@ export default {
         // Añade más imágenes si lo deseas
       ],
       currentImageIndex: 0,
+      isDashboardOpen: false, // Estado para el modal del Dashboard
     };
   },
   mounted() {
     this.createEarth();
   },
   methods: {
+    openDashboard() {
+      this.isDashboardOpen = true;
+    },
+    closeDashboard() {
+      this.isDashboardOpen = false;
+    },
     goBack() {
       this.$router.go(-1);
     },
