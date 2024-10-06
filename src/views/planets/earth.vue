@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <header class="header">
       <h1>Planeta Tierra y Satélites con Áreas de Calor</h1>
       <button class="toggle-button" @click="toggleRotation">{{ isRotating ? 'Detener Rotación' : 'Reanudar Rotación' }}</button>

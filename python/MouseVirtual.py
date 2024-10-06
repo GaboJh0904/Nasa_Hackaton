@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import SeguimientoMano as sm
 import pyautogui
+import webbrowser
 import time
 
 def iniciar_mouse_virtual():
@@ -22,6 +23,9 @@ def iniciar_mouse_virtual():
     cap.set(4, altocam)
 
     detector = sm.detectorManos(maxManos=1)
+
+    # URL del video de YouTube
+    url_video = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"  # Reemplaza con la URL del video que desees
 
     while True:
         ret, frame = cap.read()
@@ -79,15 +83,12 @@ def iniciar_mouse_virtual():
                     last_click_time = current_time  # Actualizar el tiempo del último clic
                     print("Clic simple activado")  # Imprimir acción de clic simple
 
-            # Scroll con toda la palma
-            if dedos[0] == 1 and dedos[1] == 1 and dedos[2] == 1 and dedos[3] == 1:  # Palma arriba
-                scroll_speed = 10
-                if y1 < altocam // 2:  # Si la mano está arriba
-                    pyautogui.scroll(scroll_speed)  # Hacer scroll hacia arriba
-                    print("Scroll hacia arriba")  # Imprimir acción de scroll hacia arriba
-                else:  # Si la mano está abajo
-                    pyautogui.scroll(-scroll_speed)  # Hacer scroll hacia abajo
-                    print("Scroll hacia abajo")  # Imprimir acción de scroll hacia abajo
+            # Abrir video de YouTube con un gesto específico
+            if dedos[1] == 1 and dedos[2] == 1 and dedos[3] == 1:  # Índice, medio y anular arriba
+                print("Abriendo video de YouTube...")
+                webbrowser.open(url_video)  # Abrir el video de YouTube
+                time.sleep(2)  # Esperar 2 segundos para evitar múltiples aperturas
+
 
         cv2.imshow("Mouse", frame)
         k = cv2.waitKey(1)

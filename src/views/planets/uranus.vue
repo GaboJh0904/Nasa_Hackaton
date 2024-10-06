@@ -9,7 +9,7 @@
     </header>
 
     <div class="main-content">
-      <div class="container">
+      <div class="planet">
         <aside class="sidebar">
           <h2>Información del Planeta Urano</h2>
           <div class="info-section">
@@ -66,7 +66,7 @@
 
 
           <main class="interaction-area">
-            <div ref="canvasContainer" class="canvas-container"></div>
+            <div ref="canvasplanet" class="canvas-planet"></div>
           </main>
         </div>
 
@@ -138,7 +138,7 @@ export default {
 
       const renderer = new THREE.WebGLRenderer({alpha: true});
       renderer.setSize(window.innerWidth, window.innerHeight);
-      this.$refs.canvasContainer.appendChild(renderer.domElement);
+      this.$refs.canvasplanet.appendChild(renderer.domElement);
 
       // Crear la esfera de la Tierra con su textura
       const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
@@ -361,7 +361,7 @@ h1 {
   position: relative;
 }
 
-.canvas-container {
+.canvas-planet {
   width: 100%;
   height: 600px;
   position: relative;
@@ -396,7 +396,7 @@ h1 {
   color: #ffffff;
 }
 
-.canvas-container {
+.canvas-planet {
   width: 100%;
   height: 100%;
   position: relative;
@@ -414,7 +414,7 @@ html, body {
   color: #ffffff; /* Texto en color blanco */
 }
 
-.container {
+.planet {
   display: flex; /* Usar flexbox para disposición */
   height: 100%; /* Altura completa */
 }
@@ -445,10 +445,6 @@ body {
   color: #ffffff; /* Texto en color blanco */
 }
 
-.container {
-  display: flex; /* Usar flexbox para disposición */
-  height: 100%; /* Altura completa */
-}
 
 .sidebar {
   background-color: #1e1e1e; /* Color de fondo oscuro para el aside */
