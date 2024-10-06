@@ -227,7 +227,7 @@ export default {
       sun = new THREE.Mesh(sunGeometry, sunMaterial);
       sun.userData = {
         name: "Sol",
-        texture: solTexture,
+        texture: sol,
         description:
           "El Sol es la estrella en el centro del Sistema Solar. Genera energía a través de la fusión nuclear y es el principal proveedor de luz y calor para la vida en la Tierra.",
       };
