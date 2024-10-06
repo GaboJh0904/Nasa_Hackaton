@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="header">
-      <h1>Planeta Tierra</h1>
+      <h1>Planeta: Venus</h1>
       <button class="toggle-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
@@ -11,55 +11,39 @@
     <div class="main-content">
       <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Tierra</h2>
+          <h2>Información del Planeta Venus</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Tierra</p>
-            <p><strong>Radio:</strong> 6,371 km</p>
-            <p><strong>Masa:</strong> 5.972 × 10<sup>24</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> 15 °C</p>
-            <p><strong>Satélites Naturales:</strong> 1 (Luna)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 149.6 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 24 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 365.25 días</p>
+            <p><strong>Nombre:</strong> Venus</p>
+            <p><strong>Radio:</strong> 6,051.8 km</p>
+            <p><strong>Masa:</strong> 4.867 × 10<sup>24</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> 467 °C</p>
+            <p><strong>Satélites Naturales:</strong> 0</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 108.2 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 243 días terrestres</p>
+            <p><strong>Tiempo de Traslación:</strong> 225 días terrestres</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Nitrógeno: 78%</li>
-              <li>Oxígeno: 21%</li>
-              <li>Argón: 0.93%</li>
-              <li>Otros: 0.07%</li>
+              <li>Ácido carbónico: 96.5%</li>
+              <li>Nitrógeno: 3.5%</li>
+              <li>Otros: trazas de argón, agua, y otros gases</li>
             </ul>
-            <p><strong>Descripción:</strong> La Tierra es el tercer planeta desde el Sol y el único conocido que alberga
-              vida. Su atmósfera y la presencia de agua en estado líquido son factores clave para la existencia de vida.
-            </p>
-            <p><strong>Origen:</strong> La Tierra se formó hace aproximadamente 4.5 mil millones de años a partir de la
-              acreción de materia en el disco protoplanetario del Sol.</p>
-            <p><strong>Geología:</strong> La Tierra tiene una estructura en capas que incluye el núcleo, el manto y la
-              corteza. Esta composición geológica permite la existencia de diversas características geográficas, como
-              montañas, océanos y llanuras.</p>
-            <p><strong>Ecosistemas:</strong> La Tierra alberga una variedad de ecosistemas, desde selvas tropicales
-              hasta desiertos, cada uno con su propia biodiversidad. La interconexión entre estos ecosistemas es vital
-              para el equilibrio ambiental.</p>
-            <p><strong>Posición en el Sistema Solar:</strong> La Tierra es el tercer planeta más cercano al Sol y
-              pertenece al sistema solar, que incluye ocho planetas y numerosos asteroides y cometas.</p>
+            <p><strong>Descripción:</strong> Venus es el segundo planeta desde el Sol y es conocido como el "planeta hermano" de la Tierra debido a su tamaño y composición similar. Sin embargo, sus condiciones atmosféricas son extremadamente hostiles.</p>
+            <p><strong>Origen:</strong> Venus se formó hace aproximadamente 4.5 mil millones de años y ha sido objeto de estudio debido a su similitud con la Tierra y sus condiciones climáticas extremas.</p>
+            <p><strong>Geología:</strong> Venus tiene una superficie rocosa con volcanes, llanuras y montañas. Su geología muestra signos de actividad volcánica, aunque no se ha observado erupciones recientes.</p>
+            <p><strong>Ecosistemas:</strong> Venus no tiene ecosistemas como los conocemos, debido a su alta temperatura y presión atmosférica que hacen imposible la existencia de vida tal como la conocemos.</p>
+            <p><strong>Posición en el Sistema Solar:</strong> Venus es el tercer objeto más brillante en el cielo, después del Sol y la Luna, y es conocido como la "estrella de la mañana" o la "estrella de la tarde".</p>
           </div>
 
-          <h3>Satélites Artificiales</h3>
-          <ul>
-            <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
-            </li>
-          </ul>
+          <h3>Satélites Naturales</h3>
+          <p>Venus no tiene satélites naturales.</p>
 
-          <p>La Tierra, además de ser un hogar para millones de especies, también es objeto de estudio continuo.
-            Investigaciones sobre su clima, geología y biología ayudan a entender mejor nuestro planeta y cómo cuidarlo
-            para las futuras generaciones.</p>
-          <p>La conservación del medio ambiente es crucial en la lucha contra el cambio climático, y conocer a fondo
-            nuestro planeta es el primer paso para implementar acciones efectivas.</p>
+          <p>Venus es un planeta intrigante para la ciencia, y su estudio ayuda a comprender más sobre la formación de los planetas y las condiciones que pueden hacer posible la vida.</p>
+          <p>La investigación continua sobre Venus y su atmósfera es crucial para entender los efectos de los gases de efecto invernadero y el cambio climático en nuestro propio planeta.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de la Tierra ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Venus ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -99,7 +83,7 @@
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
+import earthTexture from "@/assets/venus.jpeg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
@@ -109,14 +93,7 @@ export default {
   data() {
     return {
       isRotating: true,
-      satellites: [
-        {name: 'Hubble', orbitRadius: 547, purpose: 'Observación del espacio', inclination: 28.5},
-        {name: 'Landsat 9', orbitRadius: 705, purpose: 'Monitoreo terrestre', inclination: 98.2},
-        {name: 'ISS', orbitRadius: 408, purpose: 'Investigación científica', inclination: 51.6},
-        {name: 'Sentinel 6', orbitRadius: 1336, purpose: 'Monitoreo del nivel del mar', inclination: 66.0},
-        {name: 'SWOT', orbitRadius: 891, purpose: 'Topografía de aguas', inclination: 77.6},
-        {name: 'IXPE', orbitRadius: 600, purpose: 'Exploración de rayos X', inclination: 0}
-      ],
+      satellites: [],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
       selectedSatellite: null,

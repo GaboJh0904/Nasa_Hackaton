@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="header">
-      <h1>Planeta Tierra</h1>
+      <h1>Planeta Marte</h1>
       <button class="toggle-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
@@ -11,55 +11,44 @@
     <div class="main-content">
       <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Tierra</h2>
+          <h2>Información del Planeta Marte</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Tierra</p>
-            <p><strong>Radio:</strong> 6,371 km</p>
-            <p><strong>Masa:</strong> 5.972 × 10<sup>24</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> 15 °C</p>
-            <p><strong>Satélites Naturales:</strong> 1 (Luna)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 149.6 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 24 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 365.25 días</p>
+            <p><strong>Nombre:</strong> Marte</p>
+            <p><strong>Radio:</strong> 3,389.5 km</p>
+            <p><strong>Masa:</strong> 6.4171 × 10<sup>23</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> -63 °C</p>
+            <p><strong>Satélites Naturales:</strong> 2 (Fobos y Deimos)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 227.9 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 24.6 horas</p>
+            <p><strong>Tiempo de Traslación:</strong> 687 días terrestres</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Nitrógeno: 78%</li>
-              <li>Oxígeno: 21%</li>
-              <li>Argón: 0.93%</li>
-              <li>Otros: 0.07%</li>
+              <li>Carbono Dióxido: 95.3%</li>
+              <li>Nitrógeno: 2.7%</li>
+              <li>Argón: 1.6%</li>
+              <li>Oxígeno: 0.13%</li>
+              <li>Otros: trazas</li>
             </ul>
-            <p><strong>Descripción:</strong> La Tierra es el tercer planeta desde el Sol y el único conocido que alberga
-              vida. Su atmósfera y la presencia de agua en estado líquido son factores clave para la existencia de vida.
-            </p>
-            <p><strong>Origen:</strong> La Tierra se formó hace aproximadamente 4.5 mil millones de años a partir de la
-              acreción de materia en el disco protoplanetario del Sol.</p>
-            <p><strong>Geología:</strong> La Tierra tiene una estructura en capas que incluye el núcleo, el manto y la
-              corteza. Esta composición geológica permite la existencia de diversas características geográficas, como
-              montañas, océanos y llanuras.</p>
-            <p><strong>Ecosistemas:</strong> La Tierra alberga una variedad de ecosistemas, desde selvas tropicales
-              hasta desiertos, cada uno con su propia biodiversidad. La interconexión entre estos ecosistemas es vital
-              para el equilibrio ambiental.</p>
-            <p><strong>Posición en el Sistema Solar:</strong> La Tierra es el tercer planeta más cercano al Sol y
-              pertenece al sistema solar, que incluye ocho planetas y numerosos asteroides y cometas.</p>
+            <p><strong>Descripción:</strong> Marte es conocido como el "Planeta Rojo" debido a su color característico, que proviene de la óxido de hierro en su superficie. Es un planeta rocoso y el cuarto más cercano al Sol.</p>
+            <p><strong>Origen:</strong> Marte se formó hace aproximadamente 4.6 mil millones de años y se ha estudiado intensamente debido a sus similitudes y diferencias con la Tierra.</p>
+            <p><strong>Geología:</strong> Marte tiene características geológicas como volcanes, valles y una gran cantidad de cráteres. El monte Olimpo, el volcán más grande del sistema solar, se encuentra en Marte.</p>
+            <p><strong>Lunas Notables:</strong> Marte tiene dos lunas, Fobos y Deimos, que son pequeñas y se cree que son asteroides capturados. Fobos se encuentra en una órbita muy cercana a Marte, mientras que Deimos está más alejado.</p>
           </div>
 
-          <h3>Satélites Artificiales</h3>
+          <h3>Satélites de Marte</h3>
           <ul>
             <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
+              Satélite {{ satellite.name }} - Propósito: {{ satellite.purpose }}
             </li>
           </ul>
 
-          <p>La Tierra, además de ser un hogar para millones de especies, también es objeto de estudio continuo.
-            Investigaciones sobre su clima, geología y biología ayudan a entender mejor nuestro planeta y cómo cuidarlo
-            para las futuras generaciones.</p>
-          <p>La conservación del medio ambiente es crucial en la lucha contra el cambio climático, y conocer a fondo
-            nuestro planeta es el primer paso para implementar acciones efectivas.</p>
+          <p>La exploración de Marte ha capturado la imaginación de científicos y del público en general. Las misiones a Marte han buscado respuestas sobre la posibilidad de vida y la historia geológica del planeta.</p>
+          <p>Futuras misiones podrían llevar a los humanos a Marte, lo que abriría nuevas fronteras en la exploración espacial.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de la Tierra ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Marte ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -99,7 +88,7 @@
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
+import earthTexture from "@/assets/mars.jpg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
 import image2 from "@/assets/mars.jpg";
 import image3 from "@/assets/jupiter.jpg";
@@ -110,12 +99,12 @@ export default {
     return {
       isRotating: true,
       satellites: [
-        {name: 'Hubble', orbitRadius: 547, purpose: 'Observación del espacio', inclination: 28.5},
-        {name: 'Landsat 9', orbitRadius: 705, purpose: 'Monitoreo terrestre', inclination: 98.2},
-        {name: 'ISS', orbitRadius: 408, purpose: 'Investigación científica', inclination: 51.6},
-        {name: 'Sentinel 6', orbitRadius: 1336, purpose: 'Monitoreo del nivel del mar', inclination: 66.0},
-        {name: 'SWOT', orbitRadius: 891, purpose: 'Topografía de aguas', inclination: 77.6},
-        {name: 'IXPE', orbitRadius: 600, purpose: 'Exploración de rayos X', inclination: 0}
+        { name: 'Mars Express', orbitRadius: 9360, purpose: 'Orbiter, estudia geología y atmósfera', inclination: 86.9 },
+        { name: 'Mars Reconnaissance Orbiter', orbitRadius: 316, purpose: 'Orbiter, busca señales de agua y estudia el clima', inclination: 93.0 },
+        { name: 'MAVEN', orbitRadius: 6200, purpose: 'Estudia la atmósfera superior y el viento solar', inclination: 75.0 },
+        { name: 'Phobos', orbitRadius: 9377, purpose: 'Satélite natural, luna de Marte', inclination: 1.1 },
+        { name: 'Deimos', orbitRadius: 23460, purpose: 'Satélite natural, luna de Marte', inclination: 0.93 },
+        { name: 'Trace Gas Orbiter', orbitRadius: 400, purpose: 'Estudia gases traza en la atmósfera', inclination: 74.0 }
       ],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
