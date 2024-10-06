@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/home.vue'; // Página del sistema solar (anteriormente App.vue)
-import Earth from '@/views/planets/earth.vue'; // La página del planeta Tierra
+import Earth from '@/views/planets/earth/earth.vue'; // La página del planeta Tierra
 import Jupiter from "@/views/planets/jupiter.vue";
 import Mars from "@/views/planets/mars.vue";
 import Mercury from "@/views/planets/mercury.vue";
