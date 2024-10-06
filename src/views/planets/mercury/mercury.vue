@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta Jupiter</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Mercurio</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -11,42 +12,44 @@
     <div class="main-content">
       <div class="planet">
         <aside class="sidebar">
-          <h2>Información del Planeta Júpiter</h2>
+          <h2>Información del Planeta Mercurio</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Júpiter</p>
-            <p><strong>Radio:</strong> 69,911 km</p>
-            <p><strong>Masa:</strong> 1.898 × 10<sup>27</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> -108 °C</p>
-            <p><strong>Satélites Naturales:</strong> 79 (incluyendo Io y Europa)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 778.5 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 9 horas y 56 minutos</p>
-            <p><strong>Tiempo de Traslación:</strong> 11.86 años terrestres</p>
-            <p><strong>Composición de la Atmósfera:</strong></p>
-            <ul>
-              <li>Hidrógeno: 90%</li>
-              <li>Helio: 10%</li>
-              <li>Metano, amoníaco y vapor de agua: trazas</li>
-            </ul>
-            <p><strong>Descripción:</strong> Júpiter es el planeta más grande del sistema solar y un gigante gaseoso. Su atmósfera está compuesta principalmente de hidrógeno y helio, y presenta bandas de nubes y una famosa tormenta llamada la Gran Mancha Roja.</p>
-            <p><strong>Origen:</strong> Júpiter se formó hace aproximadamente 4.5 mil millones de años y ha mantenido su composición primordial, lo que lo convierte en un objeto de gran interés para los científicos que estudian la formación del sistema solar.</p>
-            <p><strong>Geología:</strong> Como gigante gaseoso, Júpiter no tiene una superficie sólida definida. Se cree que posee un núcleo rocoso rodeado por un manto de hidrógeno metálico, que genera un fuerte campo magnético.</p>
-            <p><strong>Lunas Notables:</strong> Júpiter tiene 79 lunas conocidas, de las cuales Io, Europa, Ganimedes y Calisto son las más grandes. Io es famosa por su actividad volcánica, mientras que Europa es considerada uno de los lugares más prometedores en la búsqueda de vida extraterrestre debido a su océano subsuperficial.</p>
+            <p><strong>Nombre:</strong> Mercurio</p>
+            <p><strong>Radio:</strong> 2,439.7 km</p>
+            <p><strong>Masa:</strong> 3.301 × 10<sup>23</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> 167 °C</p>
+            <p><strong>Satélites Naturales:</strong> 0 (Mercurio no tiene lunas)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 57.91 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 58.6 días terrestres</p>
+            <p><strong>Tiempo de Traslación:</strong> 88 días terrestres</p>
+            <p><strong>Composición de la Atmósfera:</strong> Muy delgada, compuesta principalmente de oxígeno, sodio,
+              hidrógeno, helio y potasio.</p>
+            <p><strong>Descripción:</strong> Mercurio es el planeta más cercano al Sol y el más pequeño del sistema
+              solar. Su superficie está llena de cráteres, similar a la de la Luna, debido a su falta de atmósfera
+              significativa que podría erosionar o cambiar su superficie.</p>
+            <p><strong>Geología:</strong> Mercurio presenta una estructura interna similar a la de la Tierra, con un
+              núcleo metálico grande que representa aproximadamente el 75% de su radio. Tiene un paisaje variado que
+              incluye llanuras, montañas y cuencas de impacto.</p>
+            <p><strong>Exploración:</strong> Mercurio ha sido estudiado principalmente por la misión Mariner 10 en la
+              década de 1970 y más recientemente por la sonda MESSENGER, que proporcionó datos detallados sobre su
+              superficie, composición y campo magnético.</p>
           </div>
 
-          <h3>Satélites de Júpiter</h3>
+          <h3>Satélites de Mercurio</h3>
           <ul>
-            <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
-            </li>
+            <li>No tiene satélites naturales.</li>
           </ul>
 
-          <p>Júpiter, con su inmensa gravedad y campo magnético, juega un papel importante en la dinámica del sistema solar. Su estudio proporciona información valiosa sobre la formación y evolución de los planetas.</p>
-          <p>La exploración de Júpiter y sus lunas es un objetivo primordial para las misiones espaciales, y futuros estudios podrían revelar más sobre su atmósfera y la posibilidad de vida en sus lunas.</p>
+          <p>Mercurio, al ser un planeta rocoso y pequeño, no tiene lunas ni anillos. Su proximidad al Sol y su
+            temperatura extrema lo hacen un lugar poco hospitalario.</p>
+          <p>La exploración de Mercurio es un área de interés continuo, y futuras misiones podrían ayudar a descubrir
+            más sobre su formación y evolución en comparación con otros planetas terrestres.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Júpiter ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image"
+                   :alt="'Imagen de Mercurio ' + (index + 1)"/>
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -81,25 +84,26 @@
       </div>
     </div>
   </div>
+  <ChatAssistantMercury/>
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/jupiter.jpg"; // Textura del planeta Tierra
-import image1 from "@/assets/tierra.png";
-import image2 from "@/assets/mars.jpg";
-import image3 from "@/assets/jupiter.jpg";
+import earthTexture from "@/assets/mercurio.jpg"; // Textura del planeta Tierra
+import image1 from "@/assets/mercurio_1.jpg";
+import image2 from "@/assets/mercurio_2.jpg";
+import ChatAssistantMercury from "@/views/planets/mercury/ChatAssistantMercury.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistantMercury,
+  },
   data() {
     return {
       isRotating: true,
-      satellites: [
-        { name: 'Io', orbitRadius: 4217.00, purpose: 'Satélite natural, geológicamente activo con volcanes', inclination: 0.04 },
-        { name: 'Europa', orbitRadius: 6711.00, purpose: 'Satélite natural, conocido por su superficie de hielo y la posibilidad de un océano subsuperficial', inclination: 0.47 },
-      ],
+      satellites: [],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
       selectedSatellite: null,
@@ -107,7 +111,6 @@ export default {
       images: [
         image1, // Reemplaza con la URL de la imagen 1
         image2, // Reemplaza con la URL de la imagen 2
-        image3, // Reemplaza con la URL de la imagen 3
         // Añade más imágenes si lo deseas
       ],
       currentImageIndex: 0,
@@ -117,6 +120,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },
@@ -432,6 +438,7 @@ html, body {
   background-color: #121212; /* Fondo oscuro para el contenido */
   color: #ffffff; /* Texto en color blanco */
 }
+
 html,
 body {
   height: 100%; /* Asegurar que el body ocupe toda la altura de la ventana */

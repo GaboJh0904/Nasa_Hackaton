@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta: Mercurio</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Venus</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -11,34 +12,39 @@
     <div class="main-content">
       <div class="planet">
         <aside class="sidebar">
-          <h2>Información del Planeta Mercurio</h2>
+          <h2>Información del Planeta Venus</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Mercurio</p>
-            <p><strong>Radio:</strong> 2,439.7 km</p>
-            <p><strong>Masa:</strong> 3.301 × 10<sup>23</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> 167 °C</p>
-            <p><strong>Satélites Naturales:</strong> 0 (Mercurio no tiene lunas)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 57.91 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 58.6 días terrestres</p>
-            <p><strong>Tiempo de Traslación:</strong> 88 días terrestres</p>
-            <p><strong>Composición de la Atmósfera:</strong> Muy delgada, compuesta principalmente de oxígeno, sodio, hidrógeno, helio y potasio.</p>
-            <p><strong>Descripción:</strong> Mercurio es el planeta más cercano al Sol y el más pequeño del sistema solar. Su superficie está llena de cráteres, similar a la de la Luna, debido a su falta de atmósfera significativa que podría erosionar o cambiar su superficie.</p>
-            <p><strong>Geología:</strong> Mercurio presenta una estructura interna similar a la de la Tierra, con un núcleo metálico grande que representa aproximadamente el 75% de su radio. Tiene un paisaje variado que incluye llanuras, montañas y cuencas de impacto.</p>
-            <p><strong>Exploración:</strong> Mercurio ha sido estudiado principalmente por la misión Mariner 10 en la década de 1970 y más recientemente por la sonda MESSENGER, que proporcionó datos detallados sobre su superficie, composición y campo magnético.</p>
+            <p><strong>Nombre:</strong> Venus</p>
+            <p><strong>Radio:</strong> 6,051.8 km</p>
+            <p><strong>Masa:</strong> 4.867 × 10<sup>24</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> 467 °C</p>
+            <p><strong>Satélites Naturales:</strong> 0</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 108.2 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 243 días terrestres</p>
+            <p><strong>Tiempo de Traslación:</strong> 225 días terrestres</p>
+            <p><strong>Composición de la Atmósfera:</strong></p>
+            <ul>
+              <li>Ácido carbónico: 96.5%</li>
+              <li>Nitrógeno: 3.5%</li>
+              <li>Otros: trazas de argón, agua, y otros gases</li>
+            </ul>
+            <p><strong>Descripción:</strong> Venus es el segundo planeta desde el Sol y es conocido como el "planeta hermano" de la Tierra debido a su tamaño y composición similar. Sin embargo, sus condiciones atmosféricas son extremadamente hostiles.</p>
+            <p><strong>Origen:</strong> Venus se formó hace aproximadamente 4.5 mil millones de años y ha sido objeto de estudio debido a su similitud con la Tierra y sus condiciones climáticas extremas.</p>
+            <p><strong>Geología:</strong> Venus tiene una superficie rocosa con volcanes, llanuras y montañas. Su geología muestra signos de actividad volcánica, aunque no se ha observado erupciones recientes.</p>
+            <p><strong>Ecosistemas:</strong> Venus no tiene ecosistemas como los conocemos, debido a su alta temperatura y presión atmosférica que hacen imposible la existencia de vida tal como la conocemos.</p>
+            <p><strong>Posición en el Sistema Solar:</strong> Venus es el tercer objeto más brillante en el cielo, después del Sol y la Luna, y es conocido como la "estrella de la mañana" o la "estrella de la tarde".</p>
           </div>
 
-          <h3>Satélites de Mercurio</h3>
-          <ul>
-            <li>No tiene satélites naturales.</li>
-          </ul>
+          <h3>Satélites Naturales</h3>
+          <p>Venus no tiene satélites naturales.</p>
 
-          <p>Mercurio, al ser un planeta rocoso y pequeño, no tiene lunas ni anillos. Su proximidad al Sol y su temperatura extrema lo hacen un lugar poco hospitalario.</p>
-          <p>La exploración de Mercurio es un área de interés continuo, y futuras misiones podrían ayudar a descubrir más sobre su formación y evolución en comparación con otros planetas terrestres.</p>
+          <p>Venus es un planeta intrigante para la ciencia, y su estudio ayuda a comprender más sobre la formación de los planetas y las condiciones que pueden hacer posible la vida.</p>
+          <p>La investigación continua sobre Venus y su atmósfera es crucial para entender los efectos de los gases de efecto invernadero y el cambio climático en nuestro propio planeta.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Mercurio ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Venus ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -73,18 +79,22 @@
       </div>
     </div>
   </div>
+  <ChatAssistantVenus />
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/mercurio.jpg"; // Textura del planeta Tierra
-import image1 from "@/assets/tierra.png";
-import image2 from "@/assets/mars.jpg";
-import image3 from "@/assets/jupiter.jpg";
+import earthTexture from "@/assets/venus.jpeg"; // Textura del planeta Tierra
+import image1 from "@/assets/venus_1.jpg";
+import image2 from "@/assets/venus_2.png";
+import ChatAssistantVenus from "@/views/planets/venus/ChatAssistantVenus.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistantVenus,
+  },
   data() {
     return {
       isRotating: true,
@@ -96,7 +106,6 @@ export default {
       images: [
         image1, // Reemplaza con la URL de la imagen 1
         image2, // Reemplaza con la URL de la imagen 2
-        image3, // Reemplaza con la URL de la imagen 3
         // Añade más imágenes si lo deseas
       ],
       currentImageIndex: 0,
@@ -106,6 +115,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },

@@ -22,11 +22,11 @@ def iniciar_mouse_virtual():
     if cascadeDetector.empty():
         print("Error: No se pudo cargar el clasificador de rostro.")
         exit()
-
+    imagen = 'astronauta'
     # Cargar la imagen del astronauta
-    ruta_astronauta = r'python\amongUs.png'
+    ruta_astronauta = fr'python\casco\{imagen}.png'  # Usar f-string para insertar el nombre de la imagen
     if not os.path.isfile(ruta_astronauta):
-        print("Error: La imagen del astronauta no se encontró.")
+        print(f"Error: La imagen {imagen} no se encontró.")
         exit()
 
     astronauta_img = cv2.imread(ruta_astronauta, cv2.IMREAD_UNCHANGED)  # Cargar con canal alfa si está disponible
@@ -37,7 +37,7 @@ def iniciar_mouse_virtual():
         exit()
 
     # Configuración de la cámara - ajustar según la resolución de la pantalla
-    anchocam, altocam = pyautogui.size()  # Usar el tamaño de la pantalla
+    anchocam, altocam = 640, 480
     cuadro = 100
     anchopanta, altopanta = anchocam, altocam  # Asignar tamaño de pantalla a las variables
     sua = 5
@@ -145,4 +145,5 @@ def iniciar_mouse_virtual():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    iniciar_mouse_virtual()
+    iniciar_mouse_virtual()  # Pasa el nombre de la imagen como argumento
+

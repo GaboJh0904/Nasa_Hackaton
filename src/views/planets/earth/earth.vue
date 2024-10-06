@@ -1,53 +1,66 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta: Saturno</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Tierra</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
     </header>
 
     <div class="main-content">
-      <div class="planet">
+      <div class="container">
         <aside class="sidebar">
-          <h2>Información del Planeta Saturno</h2>
+          <h2>Información del Planeta Tierra</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Saturno</p>
-            <p><strong>Radio:</strong> 58,232 km</p>
-            <p><strong>Masa:</strong> 5.683 × 10<sup>26</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> -178 °C</p>
-            <p><strong>Satélites Naturales:</strong> 83 (incluyendo Mimas, Encelado, Tethys, Dione y Rhea)</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 1,429 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 10.7 horas</p>
-            <p><strong>Tiempo de Traslación:</strong> 29.5 años terrestres</p>
+            <p><strong>Nombre:</strong> Tierra</p>
+            <p><strong>Radio:</strong> 6,371 km</p>
+            <p><strong>Masa:</strong> 5.972 × 10<sup>24</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> 15 °C</p>
+            <p><strong>Satélites Naturales:</strong> 1 (Luna)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 149.6 millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 24 horas</p>
+            <p><strong>Tiempo de Traslación:</strong> 365.25 días</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Hidrógeno: 96.3%</li>
-              <li>Helio: 3.25%</li>
-              <li>Metano, amoníaco, vapor de agua: trazas</li>
+              <li>Nitrógeno: 78%</li>
+              <li>Oxígeno: 21%</li>
+              <li>Argón: 0.93%</li>
+              <li>Otros: 0.07%</li>
             </ul>
-            <p><strong>Descripción:</strong> Saturno es el sexto planeta desde el Sol y es conocido por sus impresionantes anillos, compuestos de hielo y partículas de roca. Es el segundo planeta más grande del sistema solar después de Júpiter.</p>
-            <p><strong>Origen:</strong> Saturno se formó hace aproximadamente 4.5 mil millones de años y ha sido objeto de fascinación y estudio debido a sus características únicas.</p>
-            <p><strong>Geología:</strong> La geología de Saturno es compleja, ya que no tiene una superficie sólida definida, sino que está compuesta principalmente de hidrógeno y helio. Sin embargo, se cree que tiene un núcleo rocoso.</p>
-            <p><strong>Ecosistemas:</strong> Saturno no tiene ecosistemas conocidos debido a su composición gaseosa y condiciones extremas.</p>
-            <p><strong>Posición en el Sistema Solar:</strong> Saturno es conocido por sus brillantes anillos y es el segundo planeta más grande del sistema solar, siendo visible a simple vista desde la Tierra.</p>
+            <p><strong>Descripción:</strong> La Tierra es el tercer planeta desde el Sol y el único conocido que alberga
+              vida. Su atmósfera y la presencia de agua en estado líquido son factores clave para la existencia de vida.
+            </p>
+            <p><strong>Origen:</strong> La Tierra se formó hace aproximadamente 4.5 mil millones de años a partir de la
+              acreción de materia en el disco protoplanetario del Sol.</p>
+            <p><strong>Geología:</strong> La Tierra tiene una estructura en capas que incluye el núcleo, el manto y la
+              corteza. Esta composición geológica permite la existencia de diversas características geográficas, como
+              montañas, océanos y llanuras.</p>
+            <p><strong>Ecosistemas:</strong> La Tierra alberga una variedad de ecosistemas, desde selvas tropicales
+              hasta desiertos, cada uno con su propia biodiversidad. La interconexión entre estos ecosistemas es vital
+              para el equilibrio ambiental.</p>
+            <p><strong>Posición en el Sistema Solar:</strong> La Tierra es el tercer planeta más cercano al Sol y
+              pertenece al sistema solar, que incluye ocho planetas y numerosos asteroides y cometas.</p>
           </div>
 
-          <h3>Satélites Naturales</h3>
+          <h3>Satélites Artificiales</h3>
           <ul>
             <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
-              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius }} km - Inclinación: {{ satellite.inclination }}°
+              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
             </li>
           </ul>
 
-          <p>Los satélites de Saturno son de gran interés científico. Encelado, por ejemplo, se cree que tiene un océano subsuperficial que podría albergar vida.</p>
-          <p>El estudio de Saturno y sus satélites es crucial para entender la formación de los sistemas planetarios y la evolución del sistema solar.</p>
+          <p>La Tierra, además de ser un hogar para millones de especies, también es objeto de estudio continuo.
+            Investigaciones sobre su clima, geología y biología ayudan a entender mejor nuestro planeta y cómo cuidarlo
+            para las futuras generaciones.</p>
+          <p>La conservación del medio ambiente es crucial en la lucha contra el cambio climático, y conocer a fondo
+            nuestro planeta es el primer paso para implementar acciones efectivas.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Saturno ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de la Tierra ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -66,7 +79,7 @@
 
 
           <main class="interaction-area">
-            <div ref="canvasplanet" class="canvas-planet"></div>
+            <div ref="canvasContainer" class="canvas-container"></div>
           </main>
         </div>
 
@@ -82,31 +95,35 @@
       </div>
     </div>
   </div>
+  <ChatAssistant />
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/saturno.jpg"; // Textura del planeta Tierra
-import anilloTexture from "@/assets/anillo.jpg"; // Textura del planeta Tierra
+import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
+import moonTexture from "@/assets/moon.jpeg"; // Textura del planeta Tierra
 import image1 from "@/assets/tierra.png";
-import image2 from "@/assets/mars.jpg";
-import image3 from "@/assets/jupiter.jpg";
+import image2 from "@/assets/tierra_2.jpg";
+import image3 from "@/assets/tierra_3.jpg";
+import ChatAssistant from "@/views/planets/earth/ChatAssistant.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistant,
+  },
   data() {
     return {
       isRotating: true,
       satellites: [
-        { name: 'Mimas', orbitRadius: 18500.5, inclination: 1.6, purpose: 'Observación de la superficie' }, // km
-        { name: 'Encelado', orbitRadius: 23800.0, inclination: 0.0, purpose: 'Estudio de géiseres y océanos' }, // km
-        { name: 'Tethys', orbitRadius: 29400.7, inclination: 0.0, purpose: 'Estudio de características geológicas' }, // km
-        { name: 'Dione', orbitRadius: 37700.6, inclination: 0.0, purpose: 'Estudio de la superficie y geología' }, // km
-        { name: 'Rhea', orbitRadius: 52700.6, inclination: 0.0, purpose: 'Estudio de la superficie y anillos' }, // km
-      ]
-
-      ,
+        {name: 'Hubble', orbitRadius: 547, purpose: 'Observación del espacio', inclination: 28.5},
+        {name: 'Landsat 9', orbitRadius: 705, purpose: 'Monitoreo terrestre', inclination: 98.2},
+        {name: 'ISS', orbitRadius: 408, purpose: 'Investigación científica', inclination: 51.6},
+        {name: 'Sentinel 6', orbitRadius: 1336, purpose: 'Monitoreo del nivel del mar', inclination: 66.0},
+        {name: 'SWOT', orbitRadius: 891, purpose: 'Topografía de aguas', inclination: 77.6},
+        {name: 'IXPE', orbitRadius: 600, purpose: 'Exploración de rayos X', inclination: 0}
+      ],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
       selectedSatellite: null,
@@ -124,6 +141,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },
@@ -137,40 +157,38 @@ export default {
     createEarth() {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 5;
+      camera.position.z = 3;
 
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      const renderer = new THREE.WebGLRenderer({alpha: true});
       renderer.setSize(window.innerWidth, window.innerHeight);
-      this.$refs.canvasplanet.appendChild(renderer.domElement);
+      this.$refs.canvasContainer.appendChild(renderer.domElement);
 
-      // Crear la esfera de Saturno con su textura
-      const saturnGeometry = new THREE.SphereGeometry(1, 32, 32);
+      // Crear la esfera de la Tierra con su textura
+      const earthGeometry = new THREE.SphereGeometry(1, 32, 32); // Radio de la Tierra = 1 unidad
       const textureLoader = new THREE.TextureLoader();
-      const saturnMaterial = new THREE.MeshBasicMaterial({
-        map: textureLoader.load(earthTexture),  // Reemplaza con la textura de Saturno
+      const earthMaterial = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(earthTexture),
       });
-      const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
-      scene.add(saturn);
+      const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+      scene.add(earth);
+
+      // Crear la esfera de la Luna con su textura (ajustada para ser más grande)
+      const moonGeometry = new THREE.SphereGeometry(0.2, 15, 15); // Radio de la Luna ajustado a 0.5 unidades
+      const moonMaterial = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(moonTexture), // Textura de la Luna
+      });
+      const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+
+      // Ajustar la distancia de la Luna a la Tierra
+      const moonOrbitRadius = 3; // Distancia más cercana para una visualización mejor (antes 60)
+      moon.position.set(moonOrbitRadius, 0, 0); // Posicionar la Luna a la nueva distancia
+      scene.add(moon);
 
       // Crear la textura para las áreas calientes
-      this.createHeatMap(scene, saturn);
+      this.createHeatMap(scene, earth);
 
       // Crear satélites
       this.createSatellites(scene);
-
-      // Crear los anillos de Saturno con opacidad
-      const ringGeometry = new THREE.RingGeometry(1.2, 2, 64);  // Ajusta el radio interior y exterior
-      const ringMaterial = new THREE.MeshBasicMaterial({
-        map: textureLoader.load(anilloTexture),  // Reemplaza con la textura de los anillos
-        side: THREE.DoubleSide,  // Renderizar ambos lados del anillo
-        transparent: true,       // Habilitar transparencia
-        opacity: 0.6             // Ajusta la opacidad (0 completamente transparente, 1 opaco)
-      });
-      const rings = new THREE.Mesh(ringGeometry, ringMaterial);
-      rings.rotation.x = Math.PI / 2;  // Girar los anillos para que estén en posición horizontal
-      scene.add(rings);
-
-
 
       // Controles de cámara
       const controls = new OrbitControls(camera, renderer.domElement);
@@ -178,19 +196,37 @@ export default {
       controls.dampingFactor = 0.25;
       controls.enableZoom = true;
 
+      // Variables para animar la órbita y rotación de la Luna
+      let moonAngle = 0;
+      const moonOrbitSpeed = 0.01; // Velocidad de la órbita de la Luna
+      const moonRotationSpeed = moonOrbitSpeed; // Igual velocidad de rotación sincrónica con la órbita
+
       // Animación principal
       const animate = () => {
         requestAnimationFrame(animate);
+
         if (this.isRotating) {
-          saturn.rotation.y += 0.01;
+          // Rotación de la Tierra
+          earth.rotation.y += 0.01;
+
+          // Animar la órbita de la Luna (manteniendo rotación sincrónica)
+          moonAngle += moonOrbitSpeed;
+          moon.position.x = Math.cos(moonAngle) * moonOrbitRadius;
+          moon.position.z = Math.sin(moonAngle) * moonOrbitRadius;
+
+          // Rotación sincrónica de la Luna
+          moon.rotation.y += moonRotationSpeed;
+
           if (this.satelliteObjects.length) {
             this.animateSatellites(); // Animar los satélites solo si están inicializados
             this.updateHeatMapTexture(); // Actualizar textura de las áreas calientes
           }
         }
+
         controls.update();
         renderer.render(scene, camera);
       };
+
       animate();
 
       window.addEventListener("resize", () => {
@@ -199,6 +235,8 @@ export default {
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
     },
+
+
 
     createHeatMap(scene, earth) {
       // Crear un canvas para representar las áreas de calor
@@ -263,7 +301,7 @@ export default {
     },
 
     createSatellites(scene) {
-      const satelliteSize = 0.15; // Tamaño de los satélites
+      const satelliteSize = 0.05; // Tamaño de los satélites
 
       this.satellites.forEach((satellite, index) => {
         // Calcular el radio de la órbita
@@ -348,6 +386,31 @@ body {
   background-color: #1a1a1a;
 }
 
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribuir elementos a los extremos */
+  padding: 10px;
+  background-color: #232323;
+  color: white;
+}
+
+.back-button, .stop-button {
+  background-color: #dd8b49;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.header-title {
+  text-align: center;
+  flex-grow: 1; /* Para ocupar espacio central */
+  margin: 0;
+  font-size: 1.5em;
+}
+
 h1 {
   margin: 0;
 }
@@ -378,7 +441,7 @@ h1 {
   position: relative;
 }
 
-.canvas-planet {
+.canvas-container {
   width: 100%;
   height: 600px;
   position: relative;
@@ -413,7 +476,7 @@ h1 {
   color: #ffffff;
 }
 
-.canvas-planet {
+.canvas-container {
   width: 100%;
   height: 100%;
   position: relative;
@@ -431,7 +494,7 @@ html, body {
   color: #ffffff; /* Texto en color blanco */
 }
 
-.planet {
+.container {
   display: flex; /* Usar flexbox para disposición */
   height: 100%; /* Altura completa */
 }
@@ -462,6 +525,10 @@ body {
   color: #ffffff; /* Texto en color blanco */
 }
 
+.container {
+  display: flex; /* Usar flexbox para disposición */
+  height: 100%; /* Altura completa */
+}
 
 .sidebar {
   background-color: #1e1e1e; /* Color de fondo oscuro para el aside */

@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1>Planeta: Venus</h1>
-      <button class="toggle-button" @click="toggleRotation">{{
+    <header class="header-container">
+      <button class="nav-button" @click="goBack">⬅ Atrás</button>
+      <h1>Planeta: Neptuno</h1>
+      <button class="nav-button" @click="toggleRotation">{{
           isRotating ? 'Detener Rotación' : 'Reanudar Rotación'
         }}
       </button>
@@ -11,39 +12,43 @@
     <div class="main-content">
       <div class="planet">
         <aside class="sidebar">
-          <h2>Información del Planeta Venus</h2>
+          <h2>Información del Planeta Neptuno</h2>
           <div class="info-section">
-            <p><strong>Nombre:</strong> Venus</p>
-            <p><strong>Radio:</strong> 6,051.8 km</p>
-            <p><strong>Masa:</strong> 4.867 × 10<sup>24</sup> kg</p>
-            <p><strong>Temperatura Promedio:</strong> 467 °C</p>
-            <p><strong>Satélites Naturales:</strong> 0</p>
-            <p><strong>Distancia Promedio al Sol:</strong> 108.2 millones de km</p>
-            <p><strong>Tiempo de Rotación:</strong> 243 días terrestres</p>
-            <p><strong>Tiempo de Traslación:</strong> 225 días terrestres</p>
+            <p><strong>Nombre:</strong> Neptuno</p>
+            <p><strong>Radio:</strong> 24,622 km</p>
+            <p><strong>Masa:</strong> 1.024 × 10<sup>26</sup> kg</p>
+            <p><strong>Temperatura Promedio:</strong> -214 °C</p>
+            <p><strong>Satélites Naturales:</strong> 14 (incluyendo Tritón y Proteus)</p>
+            <p><strong>Distancia Promedio al Sol:</strong> 4.5 mil millones de km</p>
+            <p><strong>Tiempo de Rotación:</strong> 16 horas</p>
+            <p><strong>Tiempo de Traslación:</strong> 164.8 años</p>
             <p><strong>Composición de la Atmósfera:</strong></p>
             <ul>
-              <li>Ácido carbónico: 96.5%</li>
-              <li>Nitrógeno: 3.5%</li>
-              <li>Otros: trazas de argón, agua, y otros gases</li>
+              <li>Hidrógeno: 80%</li>
+              <li>Helio: 19%</li>
+              <li>Metano: 1%</li>
             </ul>
-            <p><strong>Descripción:</strong> Venus es el segundo planeta desde el Sol y es conocido como el "planeta hermano" de la Tierra debido a su tamaño y composición similar. Sin embargo, sus condiciones atmosféricas son extremadamente hostiles.</p>
-            <p><strong>Origen:</strong> Venus se formó hace aproximadamente 4.5 mil millones de años y ha sido objeto de estudio debido a su similitud con la Tierra y sus condiciones climáticas extremas.</p>
-            <p><strong>Geología:</strong> Venus tiene una superficie rocosa con volcanes, llanuras y montañas. Su geología muestra signos de actividad volcánica, aunque no se ha observado erupciones recientes.</p>
-            <p><strong>Ecosistemas:</strong> Venus no tiene ecosistemas como los conocemos, debido a su alta temperatura y presión atmosférica que hacen imposible la existencia de vida tal como la conocemos.</p>
-            <p><strong>Posición en el Sistema Solar:</strong> Venus es el tercer objeto más brillante en el cielo, después del Sol y la Luna, y es conocido como la "estrella de la mañana" o la "estrella de la tarde".</p>
+            <p><strong>Descripción:</strong> Neptuno es el octavo y último planeta del sistema solar. Es conocido por su color azul intenso, que se debe a la presencia de metano en su atmósfera. Neptuno es un gigante gaseoso, con fuertes vientos y grandes tormentas.</p>
+            <p><strong>Origen:</strong> Se formó a partir de la misma nebulosa solar que formó los demás planetas hace aproximadamente 4.5 mil millones de años.</p>
+            <p><strong>Geología:</strong> Aunque Neptuno no tiene una superficie sólida, se cree que su núcleo es rocoso y está rodeado de hielo y gases. Sus características geológicas incluyen grandes tormentas, bandas atmosféricas y un sistema de anillos delgados.</p>
+            <p><strong>Ecosistemas:</strong> Al ser un planeta gaseoso, Neptuno no alberga ecosistemas como los conocemos, pero su estudio es esencial para comprender la formación de planetas y la dinámica atmosférica.</p>
+            <p><strong>Posición en el Sistema Solar:</strong> Neptuno es el cuarto planeta más grande y el más alejado del Sol, perteneciendo al grupo de los gigantes gaseosos.</p>
           </div>
 
           <h3>Satélites Naturales</h3>
-          <p>Venus no tiene satélites naturales.</p>
+          <ul>
+            <li v-for="(satellite, index) in satellites" :key="index" @click="showSatelliteInfo(satellite)">
+              Satélite {{ satellite.name }} - Radio Órbita: {{ satellite.orbitRadius.toFixed(2) }} km
+            </li>
+          </ul>
 
-          <p>Venus es un planeta intrigante para la ciencia, y su estudio ayuda a comprender más sobre la formación de los planetas y las condiciones que pueden hacer posible la vida.</p>
-          <p>La investigación continua sobre Venus y su atmósfera es crucial para entender los efectos de los gases de efecto invernadero y el cambio climático en nuestro propio planeta.</p>
+          <p>Neptuno, al igual que otros planetas del sistema solar, es objeto de intenso estudio. La investigación sobre su atmósfera, clima y satélites nos ayuda a entender más sobre los planetas gigantes y su formación.</p>
+          <p>La conservación del conocimiento sobre nuestro sistema solar es crucial para futuras exploraciones y para entender la evolución de los planetas.</p>
 
           <h3>Galería de Imágenes</h3>
           <div class="carousel">
             <div class="carousel-images" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Venus ' + (index + 1)" />
+              <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Imagen de Neptuno ' + (index + 1)" />
             </div>
             <button @click="prevImage" class="carousel-button">◀</button>
             <button @click="nextImage" class="carousel-button">▶</button>
@@ -78,22 +83,29 @@
       </div>
     </div>
   </div>
+  <ChatAssistantNeptune />
 </template>
 
 <script>
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import earthTexture from "@/assets/venus.jpeg"; // Textura del planeta Tierra
-import image1 from "@/assets/tierra.png";
-import image2 from "@/assets/mars.jpg";
-import image3 from "@/assets/jupiter.jpg";
+import earthTexture from "@/assets/neptuno.jpg"; // Textura del planeta Tierra
+import image1 from "@/assets/neptuno_1.jpg";
+import image2 from "@/assets/neptuno_2.jpg";
+import ChatAssistantNeptune from "@/views/planets/neptune/ChatAssistantNeptune.vue";
 
 export default {
   name: "App",
+  components: {
+    ChatAssistantNeptune,
+  },
   data() {
     return {
       isRotating: true,
-      satellites: [],
+      satellites: [
+        { name: 'Tritón', orbitRadius: 35500, purpose: 'Satélite más grande de Neptuno, con actividad geológica.', inclination: 157.8 },
+        { name: 'Proteus', orbitRadius: 11760, purpose: 'Uno de los satélites más grandes y oscuros de Neptuno.', inclination: 50.5 }
+      ],
       heatMapTexture: null, // Textura de las áreas de calor
       heatSpots: [], // Zonas de calor
       selectedSatellite: null,
@@ -101,7 +113,6 @@ export default {
       images: [
         image1, // Reemplaza con la URL de la imagen 1
         image2, // Reemplaza con la URL de la imagen 2
-        image3, // Reemplaza con la URL de la imagen 3
         // Añade más imágenes si lo deseas
       ],
       currentImageIndex: 0,
@@ -111,6 +122,9 @@ export default {
     this.createEarth();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     },
@@ -261,7 +275,7 @@ export default {
         scene.add(orbitLine);
 
         // Crear el satélite
-        const satelliteGeometry = new THREE.SphereGeometry(satelliteSize, 16, 16);
+        const satelliteGeometry = new THREE.SphereGeometry(satelliteSize, 65, 65);
         const satelliteMaterial = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
         const satelliteMesh = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
 

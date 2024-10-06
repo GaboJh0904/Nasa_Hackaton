@@ -65,15 +65,17 @@ import { useRouter } from "vue-router"; // Importar el router
 
 // Importar las texturas de los planetas
 import mercurioTexture from "@/assets/mercurio.jpg";
-import venusTexture from "@/assets/mars.jpg";
+import venusTexture from "@/assets/venus.jpeg";
 import tierraTexture from "@/assets/earth.jpg";
 import marsTexture from "@/assets/mars.jpg";
 import jupiterTexture from "@/assets/jupiter.jpg";
 import saturnoTexture from "@/assets/saturno.jpg";
-import uranoTexture from "@/assets/mars.jpg";
-import neptunoTexture from "@/assets/mars.jpg";
+import uranoTexture from "@/assets/urano.jpeg";
+import neptunoTexture from "@/assets/neptuno.jpg";
 import marteTexture from "@/assets/mars.jpg";
-import starsImage from "@/assets/stars.jpg";
+import anillos from "@/assets/anillo.jpg";
+import starsTexture from "@/assets/textura_estrella.jpg";
+import sol from "@/assets/textura_sol.jpg";
 
 export default {
   setup() {
@@ -164,7 +166,7 @@ export default {
     const addStars = () => {
       const textureLoader = new THREE.TextureLoader();
       const material = new THREE.MeshBasicMaterial({
-        map: textureLoader.load(marsTexture),
+        map: textureLoader.load(starsTexture),
       }); // Usaremos temporalmente la textura de Marte
 
       // Generar 100 estrellas
@@ -225,6 +227,7 @@ export default {
       sun = new THREE.Mesh(sunGeometry, sunMaterial);
       sun.userData = {
         name: "Sol",
+        texture: sol,
         description:
           "El Sol es la estrella en el centro del Sistema Solar. Genera energía a través de la fusión nuclear y es el principal proveedor de luz y calor para la vida en la Tierra.",
       };
@@ -236,11 +239,12 @@ export default {
 
       // Crear un resplandor para el Sol
       const glowGeometry = new THREE.SphereGeometry(3.5, 32, 32);
+
+      const textureLoader = new THREE.TextureLoader();
+
       const glowMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffdd00,
-        transparent: true,
-        opacity: 0.6,
-      });
+        map: textureLoader.load(sol),
+      }); // Usar la textura correspondiente
       const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
       scene.add(glowMesh);
 
@@ -379,7 +383,7 @@ export default {
         if (data.name === "Saturno") {
           const ringGeometry = new THREE.RingGeometry(1.1, 1.8, 32);
           const ringMaterial = new THREE.MeshBasicMaterial({
-            map: textureLoader.load(marsTexture), // Puedes usar otra textura para los anillos
+            map: textureLoader.load(anillos), // Puedes usar otra textura para los anillos
             side: THREE.DoubleSide,
             transparent: true,
             opacity: 0.5,
@@ -450,14 +454,40 @@ export default {
     };
 
     // Función para manejar la navegación
-    const navigateToPlanet = () => {
-      if (selectedPlanet.value) {
-        // Navegar a la ruta específica del planeta seleccionado
-        router.push({
-          path: `/planets/${selectedPlanet.value.name.toLowerCase()}`,
-        });
-      }
-    };
+const navigateToPlanet = () => {
+  if (targetPlanet) {
+  const targetPosition = new THREE.Vector3();
+  targetPlanet.getWorldPosition(targetPosition); // Obtener la posición global del planeta
+
+  // Mover la cámara hacia el planeta
+  const distanceToPlanet = targetPosition.distanceTo(camera.position);
+  const zoomSpeed = 0.2; // Reducir la velocidad de acercamiento para un movimiento más lento
+
+  if (distanceToPlanet > -100) { 
+    // Continuar acercándose hacia el centro del planeta con un desplazamiento más pequeño
+    camera.position.lerp(
+      targetPosition.clone().sub(new THREE.Vector3(0, 0, 100)), // Reducir el desplazamiento a 2 para un acercamiento más suave
+      zoomSpeed
+    );
+    controls.target.copy(targetPosition); // Centrar controles en el planeta
+    controls.update();
+  }
+}
+
+
+  if (selectedPlanet.value) {
+    // Esperar 2 segundos antes de cambiar de página
+    setTimeout(() => {
+      // Navegar a la ruta específica del planeta seleccionado después de la pausa
+      router.push({
+        path: `/planets/${selectedPlanet.value.name.toLowerCase()}`,
+      });
+    }, 2000); // Espera de 2000 milisegundos (2 segundos)
+  }
+};
+
+
+
 
     const resetView = () => {
       const sunPosition = new THREE.Vector3(0, 0, 0); // Posición del Sol
