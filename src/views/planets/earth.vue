@@ -3,7 +3,6 @@
     <header class="header">
       <h1>Planeta Tierra y Satélites con Áreas de Calor</h1>
       <button class="toggle-button" @click="toggleRotation">{{ isRotating ? 'Detener Rotación' : 'Reanudar Rotación' }}</button>
-      <HandDetector/>
     </header>
 
     <div class="main-content">
@@ -43,12 +42,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import earthTexture from "@/assets/tierra.png"; // Textura del planeta Tierra
-import HandDetector from "@/components/HandDetector.vue";
-
 export default {
-  components: {
-    HandDetector,
-  },
   name: "App",
   data() {
     return {

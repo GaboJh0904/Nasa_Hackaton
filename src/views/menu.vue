@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen w-full relative fondo-imagen flex justify-center items-center">
+    <HandDetector/>
     <!-- Título central -->
     <div class="contenedor absolute top-1/4 left-1/2 transform -translate-x-1/2">
       <h1 class="text-white text-4xl font-extrabold text-center">Modulos Educativos</h1>
@@ -31,11 +32,16 @@
 </template>
 
 <script>
+import HandDetector from '@/components/HandDetector.vue';
+
 export default {
   methods: {
     navigateToHome() {
       this.$router.push('/home');
     }
+  },
+  components:{
+    HandDetector
   }
 }
 </script>

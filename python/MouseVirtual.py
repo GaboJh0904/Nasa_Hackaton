@@ -2,14 +2,44 @@ import cv2
 import numpy as np
 import SeguimientoMano as sm
 import pyautogui
-import webbrowser
 import time
+import os
 
 def iniciar_mouse_virtual():
-    # Configuración de la cámara
-    anchocam, altocam = 640, 480
+    # Usar la ruta absoluta del clasificador
+    ruta_clasificador = r'C:\Users\ASUS RYZEN 7\Desktop\CLASES\Nasa_Hackaton\python\rostros\faceCascade.xml'
+    print(f"Buscando clasificador en: {ruta_clasificador}")
+
+    # Verificar si el archivo existe
+    if not os.path.isfile(ruta_clasificador):
+        print("Error: El archivo faceCascade.xml no existe.")
+        exit()
+
+    # Cargar el clasificador en cascada
+    cascadeDetector = cv2.CascadeClassifier(ruta_clasificador)
+
+    # Verificar carga correcta
+    if cascadeDetector.empty():
+        print("Error: No se pudo cargar el clasificador de rostro.")
+        exit()
+
+    # Cargar la imagen del astronauta
+    ruta_astronauta = r'C:\Users\ASUS RYZEN 7\Desktop\CLASES\Nasa_Hackaton\python\astronauta.png'
+    if not os.path.isfile(ruta_astronauta):
+        print("Error: La imagen del astronauta no se encontró.")
+        exit()
+
+    astronauta_img = cv2.imread(ruta_astronauta, cv2.IMREAD_UNCHANGED)  # Cargar con canal alfa si está disponible
+
+    # Verificar si se cargó la imagen
+    if astronauta_img is None:
+        print("Error: No se pudo cargar la imagen del astronauta.")
+        exit()
+
+    # Configuración de la cámara - ajustar según la resolución de la pantalla
+    anchocam, altocam = pyautogui.size()  # Usar el tamaño de la pantalla
     cuadro = 100
-    anchopanta, altopanta = pyautogui.size()
+    anchopanta, altopanta = anchocam, altocam  # Asignar tamaño de pantalla a las variables
     sua = 5
     pubix, pubiy = 0, 0
     cubix, cubiy = 0, 0
@@ -24,19 +54,41 @@ def iniciar_mouse_virtual():
 
     detector = sm.detectorManos(maxManos=1)
 
-    # URL del video de YouTube
-    url_video = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"  # Reemplaza con la URL del video que desees
-
     while True:
         ret, frame = cap.read()
+
+        # Verificar si se detecta la cara
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        objects = cascadeDetector.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+        
+        for (x, y, w, h) in objects:
+            # Redimensionar la imagen del astronauta al tamaño del rostro detectado
+            factor_escala = 1.5  # Ajusta este valor según sea necesario
+            astronauta_resized = cv2.resize(astronauta_img, (int(w * factor_escala), int(h * factor_escala)))
+
+            # Calcular las nuevas coordenadas para centrar la imagen del astronauta
+            astronauta_height, astronauta_width = astronauta_resized.shape[:2]
+            start_x = x + int((w - astronauta_width) / 2)  # Centrar en el eje x
+            start_y = y + int((h - astronauta_height) / 2)  # Centrar en el eje y
+
+            # Asegurarse de que el área de superposición no exceda los límites del frame
+            for c in range(0, 3):  # Para los canales de BGR
+                if start_y >= 0 and start_x >= 0 and start_y + astronauta_height <= frame.shape[0] and start_x + astronauta_width <= frame.shape[1]:
+                    frame[start_y:start_y + astronauta_height, start_x:start_x + astronauta_width, c] = (
+                        astronauta_resized[:, :, c] * (astronauta_resized[:, :, 3] / 255.0) + 
+                        frame[start_y:start_y + astronauta_height, start_x:start_x + astronauta_width, c] * 
+                        (1 - (astronauta_resized[:, :, 3] / 255.0))
+                    )
+
+            # Opcional: dibujar el rectángulo de detección
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
         frame = detector.encontrarmanos(frame)
         lista, bbox = detector.encontrarposicion(frame)
 
         if len(lista) != 0:
             x1, y1 = lista[8][1:]  # Punta del índice
             x2, y2 = lista[12][1:]  # Punta del medio
-            x3, y3 = lista[16][1:]  # Punta del anular
-            x4, y4 = lista[20][1:]  # Punta del meñique
 
             dedos = detector.dedosarriba()
             cv2.rectangle(frame, (cuadro, cuadro), (anchocam - cuadro, altocam - cuadro), (0, 0, 0), 2)
@@ -83,14 +135,8 @@ def iniciar_mouse_virtual():
                     last_click_time = current_time  # Actualizar el tiempo del último clic
                     print("Clic simple activado")  # Imprimir acción de clic simple
 
-            # Abrir video de YouTube con un gesto específico
-            if dedos[1] == 1 and dedos[2] == 1 and dedos[3] == 1:  # Índice, medio y anular arriba
-                print("Abriendo video de YouTube...")
-                webbrowser.open(url_video)  # Abrir el video de YouTube
-                time.sleep(2)  # Esperar 2 segundos para evitar múltiples aperturas
-
-
         cv2.imshow("Mouse", frame)
+        cv2.resizeWindow("Mouse", anchocam, altocam)  # Ajustar tamaño de la ventana
         k = cv2.waitKey(1)
         if k == 27:  # Presionar 'ESC' para salir
             break
