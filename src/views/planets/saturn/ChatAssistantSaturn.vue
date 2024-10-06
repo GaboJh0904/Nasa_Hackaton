@@ -68,7 +68,7 @@ export default {
     async initChat() {
       let promptIA = "";
 
-      promptIA = "Eres un experto y profesional astrologo, tienes mucho concocimiento para atender a preguntas acerca del planeta saturno. No puedes responder nada realacionado a otra rama que no sea astronomia y te especializas en la saturno. Da una bienvenida al usuario preguntandole que le interas saber de la saturno";
+      promptIA = "Eres un experto y profesional astrologo, tienes mucho concocimiento para atender a preguntas acerca del planeta saturno. No puedes responder nada realacionado a otra rama que no sea astronomia y te especializas en saturno. Da una bienvenida al usuario preguntandole que le interas saber de saturno";
 
       const model = genAI.getGenerativeModel({
         model: "gemini-1.5-pro-latest",

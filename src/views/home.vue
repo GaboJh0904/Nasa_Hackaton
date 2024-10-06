@@ -74,6 +74,7 @@ import uranoTexture from "@/assets/urano.jpeg";
 import neptunoTexture from "@/assets/neptuno.jpg";
 import marteTexture from "@/assets/mars.jpg";
 import anillos from "@/assets/anillo.jpg";
+import sol from "@/assets/textura_sol.jpg";
 import starsImage from "@/assets/stars.jpg";
 
 export default {
@@ -237,11 +238,12 @@ export default {
 
       // Crear un resplandor para el Sol
       const glowGeometry = new THREE.SphereGeometry(3.5, 32, 32);
+
+      const textureLoader = new THREE.TextureLoader();
+
       const glowMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffdd00,
-        transparent: true,
-        opacity: 0.6,
-      });
+        map: textureLoader.load(sol),
+      }); // Usar la textura correspondiente
       const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
       scene.add(glowMesh);
 
